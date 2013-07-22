@@ -93,6 +93,8 @@ namespace Raven.Client.NodaTime.Tests
                     session.SaveChanges();
                 }
 
+                WaitForUserToContinueTheTest(documentStore);
+
                 using (var session = documentStore.OpenSession())
                 {
                     // .ToInstant() is required for dynamic query.  See comments in the static index for an alternative.

@@ -17,4 +17,8 @@
     </dependencies>
     <iconUrl>http://static.ravendb.net/logo-for-nuget.png</iconUrl>
   </metadata>
+  <files>
+    <file src="bin\debug\Raven.Client.NodaTime.pdb" target="lib\net40-Client"/>
+    <file src="..\Raven.Client.NodaTime-4.5\bin\Debug\Raven.Client.NodaTime-4.5.*" target="lib\net45"/>
+  </files>
 </package>

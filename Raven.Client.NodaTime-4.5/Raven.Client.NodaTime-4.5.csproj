@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{12AA1A9B-F262-4582-9B13-B918CAE43ACC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Raven.Client.NodaTime</RootNamespace>
+    <AssemblyName>Raven.Client.NodaTime-4.5</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Raven.Client.NodaTime-4.5.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Raven.Client.NodaTime-4.5.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net45">
+      <HintPath>..\packages\Microsoft.CompilerServices.AsyncTargetingPack.1.0.1\lib\net45\Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll</HintPath>
+    </Reference>
+    <Reference Include="NodaTime">
+      <HintPath>..\packages\NodaTime.1.1.0\lib\net35-Client\NodaTime.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Abstractions-4.5">
+      <HintPath>..\packages\RavenDB.Client.2.5.2646-Unstable\lib\net45\Raven.Abstractions-4.5.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight-4.5">
+      <HintPath>..\packages\RavenDB.Client.2.5.2646-Unstable\lib\net45\Raven.Client.Lightweight-4.5.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Raven.Client.NodaTime\CustomQueryTranslators.cs">
+      <Link>CustomQueryTranslators.cs</Link>
+    </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\CustomQueryValueConverters.cs">
+      <Link>CustomQueryValueConverters.cs</Link>
+    </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\Extensions.cs">
+      <Link>Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\Imports\NodaTime.Serialization.JsonNet\NodaConverterBase.cs">
+      <Link>Imports\NodaTime.Serialization.JsonNet\NodaConverterBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\Imports\NodaTime.Serialization.JsonNet\NodaConverters.cs">
+      <Link>Imports\NodaTime.Serialization.JsonNet\NodaConverters.cs</Link>
+    </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\Imports\NodaTime.Serialization.JsonNet\NodaDateTimeZoneConverter.cs">
+      <Link>Imports\NodaTime.Serialization.JsonNet\NodaDateTimeZoneConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\Imports\NodaTime.Serialization.JsonNet\NodaDurationConverter.cs">
+      <Link>Imports\NodaTime.Serialization.JsonNet\NodaDurationConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\Imports\NodaTime.Serialization.JsonNet\NodaIntervalConverter.cs">
+      <Link>Imports\NodaTime.Serialization.JsonNet\NodaIntervalConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\Imports\NodaTime.Serialization.JsonNet\NodaPatternConverter.cs">
+      <Link>Imports\NodaTime.Serialization.JsonNet\NodaPatternConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\JsonConverters\CustomPatternBasedJsonConverters.cs">
+      <Link>JsonConverters\CustomPatternBasedJsonConverters.cs</Link>
+    </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\JsonConverters\DurationConverter.cs">
+      <Link>JsonConverters\DurationConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\JsonConverters\LocalTimeConverter.cs">
+      <Link>JsonConverters\LocalTimeConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\JsonConverters\OffsetConverter.cs">
+      <Link>JsonConverters\OffsetConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\JsonConverters\OffsetDateTimeConverter.cs">
+      <Link>JsonConverters\OffsetDateTimeConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\JsonConverters\ZonedDateTimeConverter.cs">
+      <Link>JsonConverters\ZonedDateTimeConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\NodaUtil.cs">
+      <Link>NodaUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
