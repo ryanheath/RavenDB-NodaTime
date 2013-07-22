@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>RavenDB.Client.NodaTime</id>
+    <version>$version$</version>
+    <title>Noda Time support for RavenDB</title>
+    <authors>$author$</authors>
+    <description>$description$</description>
+    <language>en-US</language>
+    <licenseUrl>https://raw.github.com/mj1856/RavenDB-NodaTime/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/mj1856/RavenDB-NodaTime</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <tags>nosql ravendb raven noda time nodatime datetime date time zone timezone tzdb iana olson</tags>
+    <dependencies>
+      <dependency id="RavenDB.Client" version="2.5.2646-Unstable" />
+      <dependency id="NodaTime" version="1.1.0" />
+    </dependencies>
+    <iconUrl>http://static.ravendb.net/logo-for-nuget.png</iconUrl>
+  </metadata>
+</package>
