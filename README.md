@@ -11,7 +11,7 @@ Full documentation is pending.  Please review the unit tests for example usage.
 
 ### Nuget Installation
 
-    PM> Install-Package RavenDB.Client.NodaTime -Pre
+    PM> Install-Package RavenDB.Client.NodaTime
 
 ### Manual Installation
 
