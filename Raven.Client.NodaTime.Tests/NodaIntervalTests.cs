@@ -50,7 +50,8 @@ namespace Raven.Client.NodaTime.Tests
             var now = SystemClock.Instance.Now;
             var start = now - Duration.FromMinutes(5);
             var end = now + Duration.FromMinutes(5);
-            var interval = new Interval(start, end);
+            var interval1 = new Interval(start, end);
+            var interval2 = new Interval(end, end + Duration.FromMinutes(5));
 
             using (var documentStore = NewDocumentStore())
             {
@@ -58,7 +59,8 @@ namespace Raven.Client.NodaTime.Tests
 
                 using (var session = documentStore.OpenSession())
                 {
-                    session.Store(new Foo { Id = "foos/1", Interval = interval });
+                    session.Store(new Foo { Id = "foos/1", Interval = interval1 });
+                    session.Store(new Foo { Id = "foos/2", Interval = interval2 });
                     session.SaveChanges();
                 }
 
@@ -66,7 +68,7 @@ namespace Raven.Client.NodaTime.Tests
                 {
                     var q1 = session.Query<Foo>()
                                     .Customize(x => x.WaitForNonStaleResults())
-                                    .Where(x => x.Interval.Start == interval.Start && x.Interval.End == interval.End);
+                                    .Where(x => x.Interval.Start == interval1.Start && x.Interval.End == interval1.End);
                     var results1 = q1.ToList();
                     Assert.Equal(1, results1.Count);
 
@@ -75,6 +77,13 @@ namespace Raven.Client.NodaTime.Tests
                                     .Where(x => x.Interval.Start <= now && x.Interval.End > now);
                     var results2 = q2.ToList();
                     Assert.Equal(1, results2.Count);
+
+                    var q3 = session.Query<Foo>()
+                                    .Customize(x => x.WaitForNonStaleResults())
+                                    .OrderByDescending(x => x.Interval.Start);
+                    var results3 = q3.ToList();
+                    Assert.Equal(2, results3.Count);
+                    Assert.True(results3[0].Interval.Start > results3[1].Interval.Start);
                 }
             }
         }
@@ -85,7 +94,8 @@ namespace Raven.Client.NodaTime.Tests
             var now = SystemClock.Instance.Now;
             var start = now - Duration.FromMinutes(5);
             var end = now + Duration.FromMinutes(5);
-            var interval = new Interval(start, end);
+            var interval1 = new Interval(start, end);
+            var interval2 = new Interval(end, end + Duration.FromMinutes(5));
 
             using (var documentStore = NewDocumentStore())
             {
@@ -94,7 +104,8 @@ namespace Raven.Client.NodaTime.Tests
 
                 using (var session = documentStore.OpenSession())
                 {
-                    session.Store(new Foo { Id = "foos/1", Interval = interval });
+                    session.Store(new Foo { Id = "foos/1", Interval = interval1 });
+                    session.Store(new Foo { Id = "foos/2", Interval = interval2 });
                     session.SaveChanges();
                 }
 
@@ -102,7 +113,7 @@ namespace Raven.Client.NodaTime.Tests
                 {
                     var q1 = session.Query<Foo, TestIndex>()
                                     .Customize(x => x.WaitForNonStaleResults())
-                                    .Where(x => x.Interval.Start == interval.Start && x.Interval.End == interval.End);
+                                    .Where(x => x.Interval.Start == interval1.Start && x.Interval.End == interval1.End);
                     var results1 = q1.ToList();
                     Assert.Equal(1, results1.Count);
 
@@ -111,6 +122,13 @@ namespace Raven.Client.NodaTime.Tests
                                     .Where(x => x.Interval.Start <= now && x.Interval.End > now);
                     var results2 = q2.ToList();
                     Assert.Equal(1, results2.Count);
+
+                    var q3 = session.Query<Foo>()
+                                    .Customize(x => x.WaitForNonStaleResults())
+                                    .OrderByDescending(x => x.Interval.Start);
+                    var results3 = q3.ToList();
+                    Assert.Equal(2, results3.Count);
+                    Assert.True(results3[0].Interval.Start > results3[1].Interval.Start);
                 }
             }
         }

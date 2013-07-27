@@ -88,17 +88,25 @@ namespace Raven.Client.NodaTime.Tests
 
                 using (var session = documentStore.OpenSession())
                 {
-                    var q1 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.LocalDateTime == ldt);
+                    var q1 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.LocalDateTime == ldt);
                     var results1 = q1.ToList();
                     Assert.Equal(1, results1.Count);
 
-                    var q2 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.LocalDateTime > ldt);
+                    var q2 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.LocalDateTime > ldt)
+                                    .OrderByDescending(x => x.LocalDateTime);
                     var results2 = q2.ToList();
                     Assert.Equal(2, results2.Count);
-
-                    var q3 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.LocalDateTime >= ldt);
+                    Assert.True(results2[0].LocalDateTime > results2[1].LocalDateTime);
+                    
+                    var q3 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.LocalDateTime >= ldt)
+                                    .OrderByDescending(x => x.LocalDateTime);
                     var results3 = q3.ToList();
                     Assert.Equal(3, results3.Count);
+                    Assert.True(results3[0].LocalDateTime > results3[1].LocalDateTime);
+                    Assert.True(results3[1].LocalDateTime > results3[2].LocalDateTime);
                 }
             }
         }
@@ -119,17 +127,25 @@ namespace Raven.Client.NodaTime.Tests
 
                 using (var session = documentStore.OpenSession())
                 {
-                    var q1 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.LocalDateTime == ldt);
+                    var q1 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.LocalDateTime == ldt);
                     var results1 = q1.ToList();
                     Assert.Equal(1, results1.Count);
 
-                    var q2 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.LocalDateTime < ldt);
+                    var q2 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.LocalDateTime < ldt)
+                                    .OrderBy(x => x.LocalDateTime);
                     var results2 = q2.ToList();
                     Assert.Equal(2, results2.Count);
+                    Assert.True(results2[0].LocalDateTime < results2[1].LocalDateTime);
 
-                    var q3 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.LocalDateTime <= ldt);
+                    var q3 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.LocalDateTime <= ldt)
+                                    .OrderBy(x => x.LocalDateTime);
                     var results3 = q3.ToList();
                     Assert.Equal(3, results3.Count);
+                    Assert.True(results3[0].LocalDateTime < results3[1].LocalDateTime);
+                    Assert.True(results3[1].LocalDateTime < results3[2].LocalDateTime);
                 }
             }
         }
@@ -169,17 +185,25 @@ namespace Raven.Client.NodaTime.Tests
 
                 using (var session = documentStore.OpenSession())
                 {
-                    var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.LocalDateTime == ldt);
+                    var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.LocalDateTime == ldt);
                     var results1 = q1.ToList();
                     Assert.Equal(1, results1.Count);
 
-                    var q2 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.LocalDateTime > ldt);
+                    var q2 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.LocalDateTime > ldt)
+                                    .OrderByDescending(x => x.LocalDateTime);
                     var results2 = q2.ToList();
                     Assert.Equal(2, results2.Count);
-
-                    var q3 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.LocalDateTime >= ldt);
+                    Assert.True(results2[0].LocalDateTime > results2[1].LocalDateTime);
+                    
+                    var q3 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.LocalDateTime >= ldt)
+                                    .OrderByDescending(x => x.LocalDateTime);
                     var results3 = q3.ToList();
                     Assert.Equal(3, results3.Count);
+                    Assert.True(results3[0].LocalDateTime > results3[1].LocalDateTime);
+                    Assert.True(results3[1].LocalDateTime > results3[2].LocalDateTime);
                 }
             }
         }
@@ -201,17 +225,25 @@ namespace Raven.Client.NodaTime.Tests
 
                 using (var session = documentStore.OpenSession())
                 {
-                    var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.LocalDateTime == ldt);
+                    var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.LocalDateTime == ldt);
                     var results1 = q1.ToList();
                     Assert.Equal(1, results1.Count);
 
-                    var q2 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.LocalDateTime < ldt);
+                    var q2 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.LocalDateTime < ldt)
+                                    .OrderBy(x => x.LocalDateTime);
                     var results2 = q2.ToList();
                     Assert.Equal(2, results2.Count);
-
-                    var q3 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.LocalDateTime <= ldt);
+                    Assert.True(results2[0].LocalDateTime < results2[1].LocalDateTime);
+                    
+                    var q3 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.LocalDateTime <= ldt)
+                                    .OrderBy(x => x.LocalDateTime);
                     var results3 = q3.ToList();
                     Assert.Equal(3, results3.Count);
+                    Assert.True(results3[0].LocalDateTime < results3[1].LocalDateTime);
+                    Assert.True(results3[1].LocalDateTime < results3[2].LocalDateTime);
                 }
             }
         }

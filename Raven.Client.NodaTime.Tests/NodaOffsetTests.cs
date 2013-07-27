@@ -100,17 +100,25 @@ namespace Raven.Client.NodaTime.Tests
 
                 using (var session = documentStore.OpenSession())
                 {
-                    var q1 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.Offset == offset);
+                    var q1 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.Offset == offset);
                     var results1 = q1.ToList();
                     Assert.Equal(1, results1.Count);
 
-                    var q2 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.Offset > offset);
+                    var q2 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.Offset > offset)
+                                    .OrderByDescending(x => x.Offset);
                     var results2 = q2.ToList();
                     Assert.Equal(2, results2.Count);
+                    Assert.True(results2[0].Offset > results2[1].Offset);
 
-                    var q3 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.Offset >= offset);
+                    var q3 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.Offset >= offset)
+                                    .OrderByDescending(x => x.Offset);
                     var results3 = q3.ToList();
                     Assert.Equal(3, results3.Count);
+                    Assert.True(results3[0].Offset > results3[1].Offset);
+                    Assert.True(results3[1].Offset > results3[2].Offset);
                 }
             }
         }
@@ -131,17 +139,25 @@ namespace Raven.Client.NodaTime.Tests
 
                 using (var session = documentStore.OpenSession())
                 {
-                    var q1 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.Offset == offset);
+                    var q1 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.Offset == offset);
                     var results1 = q1.ToList();
                     Assert.Equal(1, results1.Count);
 
-                    var q2 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.Offset < offset);
+                    var q2 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.Offset < offset)
+                                    .OrderBy(x => x.Offset);
                     var results2 = q2.ToList();
                     Assert.Equal(2, results2.Count);
-
-                    var q3 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.Offset <= offset);
+                    Assert.True(results2[0].Offset < results2[1].Offset);
+                    
+                    var q3 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.Offset <= offset)
+                                    .OrderBy(x => x.Offset);
                     var results3 = q3.ToList();
                     Assert.Equal(3, results3.Count);
+                    Assert.True(results3[0].Offset < results3[1].Offset);
+                    Assert.True(results3[1].Offset < results3[2].Offset);
                 }
             }
         }
@@ -187,17 +203,25 @@ namespace Raven.Client.NodaTime.Tests
 
                 using (var session = documentStore.OpenSession())
                 {
-                    var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.Offset == offset);
+                    var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.Offset == offset);
                     var results1 = q1.ToList();
                     Assert.Equal(1, results1.Count);
 
-                    var q2 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.Offset > offset);
+                    var q2 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.Offset > offset)
+                                    .OrderByDescending(x => x.Offset);
                     var results2 = q2.ToList();
                     Assert.Equal(2, results2.Count);
-
-                    var q3 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.Offset >= offset);
+                    Assert.True(results2[0].Offset > results2[1].Offset);
+                    
+                    var q3 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.Offset >= offset)
+                                    .OrderByDescending(x => x.Offset);
                     var results3 = q3.ToList();
                     Assert.Equal(3, results3.Count);
+                    Assert.True(results3[0].Offset > results3[1].Offset);
+                    Assert.True(results3[1].Offset > results3[2].Offset);
                 }
             }
         }
@@ -219,17 +243,25 @@ namespace Raven.Client.NodaTime.Tests
 
                 using (var session = documentStore.OpenSession())
                 {
-                    var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.Offset == offset);
+                    var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.Offset == offset);
                     var results1 = q1.ToList();
                     Assert.Equal(1, results1.Count);
 
-                    var q2 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.Offset < offset);
+                    var q2 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.Offset < offset)
+                                    .OrderBy(x => x.Offset);
                     var results2 = q2.ToList();
                     Assert.Equal(2, results2.Count);
-
-                    var q3 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.Offset <= offset);
+                    Assert.True(results2[0].Offset < results2[1].Offset);
+                    
+                    var q3 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
+                                    .Where(x => x.Offset <= offset)
+                                    .OrderBy(x => x.Offset);
                     var results3 = q3.ToList();
                     Assert.Equal(3, results3.Count);
+                    Assert.True(results3[0].Offset < results3[1].Offset);
+                    Assert.True(results3[1].Offset < results3[2].Offset);
                 }
             }
         }
