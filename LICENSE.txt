@@ -1,3 +1,7 @@
+This library, RavenDB-NodaTime, is provided under the MIT license, as shown below.  
+- RavenDB is licensed separately.  See http://ravendb.net/licensing
+- Noda Time is also licensed separately.  See https://noda-time.googlecode.com/hg/LICENSE.txt
+
 The MIT License (MIT)
 
 Copyright (c) 2013 Matt Johnson
