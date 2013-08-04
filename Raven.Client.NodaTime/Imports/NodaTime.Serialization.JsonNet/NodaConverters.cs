@@ -67,6 +67,26 @@ namespace Raven.Imports.NodaTime.Serialization.JsonNet
         /// </summary>
         public static readonly JsonConverter NormalizingIsoPeriodConverter = new NodaPatternConverter<Period>(PeriodPattern.NormalizingIsoPattern);
 
+        /// <summary>
+        /// Converter for using instants as dictionary keys.
+        /// </summary>
+        public static readonly JsonConverter InstantDictionaryKeyConverter = new DictionaryKeyConverter<Instant>();
+
+        /// <summary>
+        /// Converter for using local dates as dictionary keys.
+        /// </summary>
+        public static readonly JsonConverter LocalDateDictionaryKeyConverter = new DictionaryKeyConverter<LocalDate>();
+
+        /// <summary>
+        /// Converter for using local dates and times as dictionary keys.
+        /// </summary>
+        public static readonly JsonConverter LocalDateTimeDictionaryKeyConverter = new DictionaryKeyConverter<LocalDateTime>();
+
+        /// <summary>
+        /// Converter for using local times as dictionary keys.
+        /// </summary>
+        public static readonly JsonConverter LocalTimeDictionaryKeyConverter = new DictionaryKeyConverter<LocalTime>();
+
         private static Action<T> CreateIsoValidator<T>(Func<T, CalendarSystem> calendarProjection)
         {
             return value => {

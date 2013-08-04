@@ -58,6 +58,7 @@
     <Compile Include="CustomQueryTranslators.cs" />
     <Compile Include="CustomQueryValueConverters.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Imports\NodaTime.Serialization.JsonNet\DictionaryKeyConverter.cs" />
     <Compile Include="Imports\NodaTime.Serialization.JsonNet\NodaConverterBase.cs" />
     <Compile Include="Imports\NodaTime.Serialization.JsonNet\NodaConverters.cs" />
     <Compile Include="Imports\NodaTime.Serialization.JsonNet\NodaDateTimeZoneConverter.cs" />

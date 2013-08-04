@@ -63,6 +63,9 @@
     <Compile Include="..\Raven.Client.NodaTime\Extensions.cs">
       <Link>Extensions.cs</Link>
     </Compile>
+    <Compile Include="..\Raven.Client.NodaTime\Imports\NodaTime.Serialization.JsonNet\DictionaryKeyConverter.cs">
+      <Link>Imports\NodaTime.Serialization.JsonNet\DictionaryKeyConverter.cs</Link>
+    </Compile>
     <Compile Include="..\Raven.Client.NodaTime\Imports\NodaTime.Serialization.JsonNet\NodaConverterBase.cs">
       <Link>Imports\NodaTime.Serialization.JsonNet\NodaConverterBase.cs</Link>
     </Compile>
