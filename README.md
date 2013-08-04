@@ -1,10 +1,14 @@
 Noda Time support for RavenDB
 =============================
 
-This is a custom extension for RavenDB.  The current release requires RavenDB version 2.5.2666 or higher.
+This is a custom extension for RavenDB.  
 
 It allows you to use data types from [Noda Time](http://www.nodatime.org), such as `Instant`, `LocalDateTime`, and others.
 Specifically, it enables you to use these types directly in your domain entities, which get serialized into RavenDB documents.
+
+The current release requires RavenDB version 2.5.2666 or higher.  However, if you are sorting on `LocalTime`, `Offset`, or `Duration` types, then you need to use
+RavenDB 2.5.2670 or higher, due to [an issue](https://github.com/mj1856/RavenDB-NodaTime/issues/1) that
+was resolved in that build.
 
 Full documentation is pending.  Please review the unit tests for example usage.
 
