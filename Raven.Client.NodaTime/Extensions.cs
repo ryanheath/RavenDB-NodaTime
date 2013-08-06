@@ -75,8 +75,7 @@ namespace Raven.Client.NodaTime
 
         public static LocalTime ToLocalTime(this TimeSpan timeSpan)
         {
-            var tickWithinMillisecond = (int)(timeSpan.Ticks - Convert.ToInt64(Math.Floor(timeSpan.TotalMilliseconds)) * 10000L);
-            return new LocalTime(timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds, tickWithinMillisecond);
+            return LocalTime.FromTicksSinceMidnight(timeSpan.Ticks);
         }
     }
 }
