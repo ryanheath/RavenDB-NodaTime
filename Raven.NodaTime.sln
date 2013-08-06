@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{61090F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raven.Client.NodaTime-4.5", "Raven.Client.NodaTime-4.5\Raven.Client.NodaTime-4.5.csproj", "{12AA1A9B-F262-4582-9B13-B918CAE43ACC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raven.Bundles.NodaTime", "Raven.Bundles.NodaTime\Raven.Bundles.NodaTime.csproj", "{7C3250F7-BA94-4A0C-9E6A-944CC3EE2FBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{12AA1A9B-F262-4582-9B13-B918CAE43ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12AA1A9B-F262-4582-9B13-B918CAE43ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12AA1A9B-F262-4582-9B13-B918CAE43ACC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C3250F7-BA94-4A0C-9E6A-944CC3EE2FBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C3250F7-BA94-4A0C-9E6A-944CC3EE2FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C3250F7-BA94-4A0C-9E6A-944CC3EE2FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C3250F7-BA94-4A0C-9E6A-944CC3EE2FBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

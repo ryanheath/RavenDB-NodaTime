@@ -91,6 +91,9 @@
     <Compile Include="NodaPeriodTests.cs" />
     <Compile Include="NodaZonedDateTimeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimeZoneConversionTests\DateTimeZoneTests_Tzdb.cs" />
+    <Compile Include="TimeZoneConversionTests\DateTimeZoneTests_Bcl.cs" />
+    <Compile Include="TimeZoneConversionTests\TimeZoneInfoTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -98,6 +101,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Raven.Bundles.NodaTime\Raven.Bundles.NodaTime.csproj">
+      <Project>{7C3250F7-BA94-4A0C-9E6A-944CC3EE2FBB}</Project>
+      <Name>Raven.Bundles.NodaTime</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Raven.Client.NodaTime\Raven.Client.NodaTime.csproj">
       <Project>{0f858c9b-0345-4ed8-93f9-6ec838f22ccc}</Project>
       <Name>Raven.Client.NodaTime</Name>
