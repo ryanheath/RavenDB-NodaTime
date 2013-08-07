@@ -1,51 +1,60 @@
-﻿using System;
-using NodaTime;
+﻿using NodaTime;
+using Raven.Client.Indexes;
 
 namespace Raven.Client.NodaTime
 {
     public static class NodaTimeField
     {
-        public static Instant AsInstant(Instant value)
+        [RavenMethod]
+        public static Instant AsInstant(this Instant value)
         {
             return value;
         }
 
-        public static LocalDateTime AsLocalDateTime(LocalDateTime value)
+        [RavenMethod]
+        public static LocalDateTime AsLocalDateTime(this LocalDateTime value)
         {
             return value;
         }
 
-        public static LocalDate AsLocalDate(LocalDate value)
+        [RavenMethod]
+        public static LocalDate AsLocalDate(this LocalDate value)
         {
             return value;
         }
 
-        public static LocalTime AsLocalTime(LocalTime value)
+        [RavenMethod]
+        public static LocalTime AsLocalTime(this LocalTime value)
         {
             return value;
         }
 
-        public static Duration AsDuration(Duration value)
+        [RavenMethod]
+        public static Duration AsDuration(this Duration value)
         {
             return value;
         }
 
-        public static Offset AsOffset(Offset value)
+        [RavenMethod]
+        public static Offset AsOffset(this Offset value)
         {
             return value;
         }
 
-        public static OffsetDateTime AsOffsetDateTime(OffsetDateTime value)
+        [RavenMethod]
+        public static OffsetDateTime AsOffsetDateTime(this OffsetDateTime value)
         {
             return value;
         }
 
-        public static ZonedDateTime AsZonedDateTime(ZonedDateTime value)
+        [RavenMethod]
+        public static ZonedDateTime AsZonedDateTime(this ZonedDateTime value)
         {
             return value;
         }
 
-        public static T Resolve<T>(T value)
+        [RavenMethod]
+        public static T Resolve<T>(this T value)
         {
             return value;
         }

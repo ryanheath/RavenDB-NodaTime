@@ -71,14 +71,14 @@ namespace Raven.Client.NodaTime.Tests.TimeZoneConversionTests
             {
                 Map = foos => from foo in foos
                               let zones = DateTimeZoneProviders.Tzdb
-                              let instant = NodaTimeField.AsInstant(foo.Instant)
+                              let instant = foo.Instant.AsInstant()
                               select new
                                      {
                                          foo.Instant,
-                                         DateTimePacific = NodaTimeField.Resolve(instant.InZone(zones["America/Los_Angeles"]).LocalDateTime),
-                                         DateTimeMountain = NodaTimeField.Resolve(instant.InZone(zones["America/Denver"]).LocalDateTime),
-                                         DateTimeCentral = NodaTimeField.Resolve(instant.InZone(zones["America/Chicago"]).LocalDateTime),
-                                         DateTimeEastern = NodaTimeField.Resolve(instant.InZone(zones["America/New_York"]).LocalDateTime),
+                                         DateTimePacific = instant.InZone(zones["America/Los_Angeles"]).LocalDateTime.Resolve(),
+                                         DateTimeMountain = instant.InZone(zones["America/Denver"]).LocalDateTime.Resolve(),
+                                         DateTimeCentral = instant.InZone(zones["America/Chicago"]).LocalDateTime.Resolve(),
+                                         DateTimeEastern = instant.InZone(zones["America/New_York"]).LocalDateTime.Resolve(),
                                      };
                 StoreAllFields(FieldStorage.Yes);
             }
