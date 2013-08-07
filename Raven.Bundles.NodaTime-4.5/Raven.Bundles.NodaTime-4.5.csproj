@@ -35,11 +35,13 @@
     <Reference Include="NodaTime">
       <HintPath>..\packages\NodaTime.1.1.0\lib\net35-Client\NodaTime.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Abstractions-4.5">
-      <HintPath>..\packages\RavenDB.Database.2.5.2670-Unstable\lib\net45\Raven.Abstractions-4.5.dll</HintPath>
+    <Reference Include="Raven.Abstractions-4.5, Version=2.5.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RavenDB.Database.2.5.2671-Unstable\lib\net45\Raven.Abstractions-4.5.dll</HintPath>
     </Reference>
-    <Reference Include="Raven.Database-4.5">
-      <HintPath>..\packages\RavenDB.Database.2.5.2670-Unstable\lib\net45\Raven.Database-4.5.dll</HintPath>
+    <Reference Include="Raven.Database-4.5, Version=2.5.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RavenDB.Database.2.5.2671-Unstable\lib\net45\Raven.Database-4.5.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
