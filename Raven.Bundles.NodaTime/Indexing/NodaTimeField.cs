@@ -48,7 +48,7 @@ namespace Raven.Bundles.NodaTime.Indexing
             return OffsetDateTime.FromDateTimeOffset(value);
         }
 
-        public static ZonedDateTime AsZoneDateTime(RavenJObject obj)
+        public static ZonedDateTime AsZonedDateTime(RavenJObject obj)
         {
             var dto = obj.Value<DateTimeOffset>("OffsetDateTime");
             var zone = obj.Value<string>("Zone");
