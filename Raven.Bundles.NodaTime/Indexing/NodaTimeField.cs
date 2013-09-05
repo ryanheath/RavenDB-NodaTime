@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using NodaTime;
+using Raven.Abstractions.Linq;
 using Raven.Json.Linq;
 
 namespace Raven.Bundles.NodaTime.Indexing
@@ -48,10 +49,10 @@ namespace Raven.Bundles.NodaTime.Indexing
             return OffsetDateTime.FromDateTimeOffset(value);
         }
 
-        public static ZonedDateTime AsZonedDateTime(RavenJObject obj)
+        public static ZonedDateTime AsZonedDateTime(DynamicJsonObject obj)
         {
-            var dto = obj.Value<DateTimeOffset>("OffsetDateTime");
-            var zone = obj.Value<string>("Zone");
+            var dto = (DateTimeOffset) obj.GetValue("OffsetDateTime");
+            var zone = (string) obj.GetValue("Zone");
 
             var odt = OffsetDateTime.FromDateTimeOffset(dto);
             var tz = DateTimeZoneProviders.Tzdb.GetZoneOrNull(zone);
