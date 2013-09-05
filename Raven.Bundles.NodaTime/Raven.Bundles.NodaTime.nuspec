@@ -12,13 +12,13 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <tags>nosql ravendb raven noda time nodatime datetime date time zone timezone tzdb iana olson</tags>
     <dependencies>
-      <dependency id="RavenDB.Database" version="2.5.2666" />
+      <dependency id="RavenDB.Database" version="2.5.2700" />
       <dependency id="NodaTime" version="1.1.0" />
     </dependencies>
     <iconUrl>http://static.ravendb.net/logo-for-nuget.png</iconUrl>
   </metadata>
   <files>
     <file src="bin\debug\Raven.Bundles.NodaTime.pdb" target="lib\net40"/>
-    <file src="..\Raven.Bundles.NodaTime-4.5\bin\Debug\Raven.Bundles.NodaTime-4.5.*" target="lib\net45"/>
+    <file src="..\Raven.Bundles.NodaTime-4.5\bin\Debug\Raven.Bundles.NodaTime.*" target="lib\net45"/>
   </files>
 </package>
