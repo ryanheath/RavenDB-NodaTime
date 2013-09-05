@@ -1,8 +1,10 @@
-﻿using System;
+﻿using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
 using System.Linq;
 using NodaTime;
+using Raven.Bundles.NodaTime;
 using Raven.Client.Indexes;
+using Raven.Database.Config;
 using Raven.Imports.Newtonsoft.Json;
 using Raven.Tests.Helpers;
 using Xunit;
@@ -15,6 +17,11 @@ namespace Raven.Client.NodaTime.Tests
         //       This is because most of the timezones did not exist then, so their values
         //       are meaningless.  ZonedDateTime is only for values that are actually
         //       valid at some point in the time zone's history.
+
+        protected override void ModifyConfiguration(InMemoryRavenConfiguration configuration)
+        {
+            configuration.Catalog.Catalogs.Add(new AssemblyCatalog(typeof(NodaTimeCompilationExtension).Assembly));
+        }
 
         [Fact]
         public void Can_Use_NodaTime_ZonedDateTime_In_Document_Now()
@@ -194,7 +201,7 @@ namespace Raven.Client.NodaTime.Tests
                               select new
                               {
                                   // If you map the OffsetDatetime value here, you don't need to call .ToInstant() method in the query.
-                                  ZonedDateTime = AsDocument(foo)["ZonedDateTime"].Value<DateTimeOffset>("OffsetDateTime")
+                                  ZonedDateTime = foo.ZonedDateTime.AsZonedDateTime().ToOffsetDateTime().Resolve()
                               };
             }
         }
