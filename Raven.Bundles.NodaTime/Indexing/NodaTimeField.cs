@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using NodaTime;
+using NodaTime.Text;
 using Raven.Abstractions.Linq;
 using Raven.Json.Linq;
 
@@ -75,9 +76,9 @@ namespace Raven.Bundles.NodaTime.Indexing
             return value.ToDateTimeUnspecified();
         }
 
-        public static DateTime Resolve(LocalDate value)
+        public static string Resolve(LocalDate value)
         {
-            return value.AtMidnight().ToDateTimeUnspecified();
+            return value.ToString(LocalDatePattern.IsoPattern.PatternText, null);
         }
 
         public static TimeSpan Resolve(LocalTime value)
