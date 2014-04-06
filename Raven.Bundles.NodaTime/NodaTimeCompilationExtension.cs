@@ -1,4 +1,5 @@
-﻿using NodaTime;
+﻿using System.Xml.Serialization;
+using NodaTime;
 using Raven.Bundles.NodaTime.Indexing;
 using Raven.Database.Plugins;
 
@@ -13,7 +14,7 @@ namespace Raven.Bundles.NodaTime
 
         public override string[] GetAssembliesToReference()
         {
-            return new[] { typeof(Instant).Assembly.Location, typeof(NodaTimeField).Assembly.Location };
+            return new[] { typeof(Instant).Assembly.Location, typeof(NodaTimeField).Assembly.Location, typeof(IXmlSerializable).Assembly.Location };
         }
     }
 }

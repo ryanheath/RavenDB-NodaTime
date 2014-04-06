@@ -41,10 +41,10 @@ namespace Raven.Client.NodaTime.Tests.TimeZoneConversionTests
                                         .First();
 
                     Debug.WriteLine("UTC:      {0}", result.Instant);
-                    Debug.WriteLine("Pacific:  {0:s}", result.DateTimePacific);
-                    Debug.WriteLine("Mountain: {0:s}", result.DateTimeMountain);
-                    Debug.WriteLine("Central:  {0:s}", result.DateTimeCentral);
                     Debug.WriteLine("Eastern:  {0:s}", result.DateTimeEastern);
+                    Debug.WriteLine("Central:  {0:s}", result.DateTimeCentral);
+                    Debug.WriteLine("Mountain: {0:s}", result.DateTimeMountain);
+                    Debug.WriteLine("Pacific:  {0:s}", result.DateTimePacific);
                 }
             }
         }
@@ -57,10 +57,10 @@ namespace Raven.Client.NodaTime.Tests.TimeZoneConversionTests
         public class Result
         {
             public Instant Instant { get; set; }
-            public LocalDateTime DateTimePacific { get; set; }
-            public LocalDateTime DateTimeMountain { get; set; }
-            public LocalDateTime DateTimeCentral { get; set; }
             public LocalDateTime DateTimeEastern { get; set; }
+            public LocalDateTime DateTimeCentral { get; set; }
+            public LocalDateTime DateTimeMountain { get; set; }
+            public LocalDateTime DateTimePacific { get; set; }
         }
 
         public class Foo_ByDate_MultiZone : AbstractIndexCreationTask<Foo, Result>
@@ -73,10 +73,10 @@ namespace Raven.Client.NodaTime.Tests.TimeZoneConversionTests
                               select new
                                      {
                                          foo.Instant,
-                                         DateTimePacific = instant.InZone(zones["Pacific Standard Time"]).LocalDateTime.Resolve(),
-                                         DateTimeMountain = instant.InZone(zones["Mountain Standard Time"]).LocalDateTime.Resolve(),
-                                         DateTimeCentral = instant.InZone(zones["Central Standard Time"]).LocalDateTime.Resolve(),
                                          DateTimeEastern = instant.InZone(zones["Eastern Standard Time"]).LocalDateTime.Resolve(),
+                                         DateTimeCentral = instant.InZone(zones["Central Standard Time"]).LocalDateTime.Resolve(),
+                                         DateTimeMountain = instant.InZone(zones["Mountain Standard Time"]).LocalDateTime.Resolve(),
+                                         DateTimePacific = instant.InZone(zones["Pacific Standard Time"]).LocalDateTime.Resolve(),
                                      };
                 StoreAllFields(FieldStorage.Yes);
             }
