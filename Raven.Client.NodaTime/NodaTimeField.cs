@@ -58,5 +58,11 @@ namespace Raven.Client.NodaTime
         {
             return value;
         }
+
+        [RavenMethod]
+        public static int DaysBetween(this LocalDate localDate1, LocalDate localDate2)
+        {
+            return 0;
+        }
     }
 }
