@@ -22,9 +22,9 @@ namespace Raven.Bundles.NodaTime.Indexing
             return LocalDateTime.FromDateTime(value);
         }
 
-        public static LocalDate AsLocalDate(DateTime value)
+        public static LocalDate AsLocalDate(string value)
         {
-            return AsLocalDateTime(value).Date;
+            return LocalDatePattern.IsoPattern.Parse(value).Value;
         }
 
         public static LocalTime AsLocalTime(TimeSpan value)
