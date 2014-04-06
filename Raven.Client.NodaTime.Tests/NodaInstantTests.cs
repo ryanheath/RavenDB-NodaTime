@@ -13,8 +13,7 @@ namespace Raven.Client.NodaTime.Tests
     {
         public static LocalDateTime At(this LocalDate localDate, LocalTime localTime)
         {
-            var tickOfMillisecond = localTime.TickOfSecond - localTime.Millisecond * 10000;
-            return new LocalDateTime(localDate.Year, localDate.Month, localDate.Day, localTime.Hour, localTime.Minute, localTime.Second, localTime.Millisecond, tickOfMillisecond);
+            return localDate + localTime;
         }
     }
 
