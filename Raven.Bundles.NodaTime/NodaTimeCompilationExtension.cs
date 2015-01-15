@@ -9,7 +9,7 @@ namespace Raven.Bundles.NodaTime
     {
         public override string[] GetNamespacesToImport()
         {
-            return new[] { typeof(Instant).Namespace, typeof(NodaTimeField).Namespace };
+            return new[] { typeof(Instant).Namespace, typeof(NodaTimeField).Namespace, typeof(IXmlSerializable).Namespace };
         }
 
         public override string[] GetAssembliesToReference()
