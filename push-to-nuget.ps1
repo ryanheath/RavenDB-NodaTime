@@ -1,4 +1,10 @@
-nuget pack .\Raven.Bundles.NodaTime\Raven.Bundles.NodaTime.csproj
-nuget pack .\Raven.Client.NodaTime\Raven.Client.NodaTime.csproj
-nuget push *.nupkg
+nuget pack .\Raven.Bundles.NodaTime\Raven.Bundles.NodaTime.csproj -Prop Configuration=Release -Symbols
+nuget pack .\Raven.Client.NodaTime\Raven.Client.NodaTime.csproj -Prop Configuration=Release -Symbols
+
+Get-ChildItem . -Filter *.nupkg | `
+Foreach-Object{
+  If($_.Name -notmatch '.symbols.'){
+    nuget push $_.Name
+  }
+}
 del *.nupkg
