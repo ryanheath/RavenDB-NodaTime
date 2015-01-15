@@ -84,7 +84,6 @@
     <Compile Include="NodaPeriodTests.cs" />
     <Compile Include="NodaZonedDateTimeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RavenTests\CanCallLastOnArray.cs" />
     <Compile Include="TestExtensions.cs" />
     <Compile Include="TimeZoneConversionTests\DateTimeZoneTests_Tzdb.cs" />
     <Compile Include="TimeZoneConversionTests\DateTimeZoneTests_Bcl.cs" />
