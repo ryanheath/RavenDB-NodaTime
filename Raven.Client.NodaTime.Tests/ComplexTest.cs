@@ -59,7 +59,7 @@ namespace Raven.Client.NodaTime.Tests
                 using (var session = documentStore.OpenSession())
                 {
                     var q = session.Query<HoursForDate, SchedulesIndex>()
-                        .AsProjection<HoursForDate>()
+                        .ProjectFromIndexFieldsInto<HoursForDate>()
                         .Take(1024);
 
                     Debug.WriteLine(q);
@@ -92,7 +92,7 @@ namespace Raven.Client.NodaTime.Tests
 
                     var q = session.Query<HoursForDate, SchedulesIndex>()
                         .Where(x => x.Open <= now && x.Close > now)
-                        .AsProjection<HoursForDate>();
+                        .ProjectFromIndexFieldsInto<HoursForDate>();
 
                     Debug.WriteLine(q);
 
