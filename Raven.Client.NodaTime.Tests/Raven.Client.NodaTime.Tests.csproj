@@ -74,6 +74,7 @@
     <Compile Include="ComplexTest.cs" />
     <Compile Include="NodaDateTimeZoneTests.cs" />
     <Compile Include="NodaDurationTests.cs" />
+    <Compile Include="DictionaryKeyConverterTests.cs" />
     <Compile Include="NodaInstantTests.cs" />
     <Compile Include="NodaIntervalTests.cs" />
     <Compile Include="NodaLocalDateTests.cs" />
