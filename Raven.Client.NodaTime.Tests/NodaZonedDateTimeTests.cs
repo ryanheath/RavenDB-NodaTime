@@ -187,6 +187,33 @@ namespace Raven.Client.NodaTime.Tests
             }
         }
 
+        [Fact]
+        public void Can_Use_NodaTime_ZonedDateTime_In_Static_MapReduceIndex()
+        {
+            var zdt = SystemClock.Instance.Now.InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
+
+            using (var documentStore = NewDocumentStore())
+            {
+                documentStore.ConfigureForNodaTime();
+                documentStore.ExecuteIndex(new TestIndex2());
+
+                using (var session = documentStore.OpenSession())
+                {
+                    session.Store(new Foo { Id = "foos/1", ZonedDateTime = zdt });
+                    session.Store(new Foo { Id = "foos/2", ZonedDateTime = zdt - Duration.FromMinutes(1) });
+                    session.Store(new Foo { Id = "foos/3", ZonedDateTime = zdt - Duration.FromMinutes(2) });
+                    session.SaveChanges();
+                }
+
+                using (var session = documentStore.OpenSession())
+                {
+                    var result = session.Query<TestIndex2.Result, TestIndex2>().Customize(x => x.WaitForNonStaleResults())
+                        .First();
+                    Assert.Equal(zdt.ToOffsetDateTime(), result.Value);
+                }
+            }
+        }
+
         public class Foo
         {
             public string Id { get; set; }
@@ -203,6 +230,32 @@ namespace Raven.Client.NodaTime.Tests
                                   // If you map the OffsetDatetime value here, you don't need to call .ToInstant() method in the query.
                                   ZonedDateTime = foo.ZonedDateTime.AsZonedDateTime().ToOffsetDateTime().Resolve()
                               };
+            }
+        }
+
+        public class TestIndex2 : AbstractIndexCreationTask<Foo, TestIndex2.Result>
+        {
+            public class Result
+            {
+                public OffsetDateTime Value { get; set; }
+            }
+
+            public TestIndex2()
+            {
+                Map = foos => from foo in foos
+                              select new
+                              {
+                                  Value = foo.ZonedDateTime.AsZonedDateTime().ToOffsetDateTime().Resolve()
+                              };
+
+                Reduce = results => from result in results
+                                    group result by 0
+                                    into g
+                                    select new
+                                    {
+                                        Value = g.Max(x => x.Value)
+                                    };
+
             }
         }
     }
