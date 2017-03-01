@@ -4,7 +4,7 @@ nuget pack .\Raven.Client.NodaTime\Raven.Client.NodaTime.csproj -Prop Configurat
 Get-ChildItem . -Filter *.nupkg | `
 Foreach-Object{
   If($_.Name -notmatch '.symbols.'){
-    nuget push $_.Name
+    nuget push $_.Name -Source https://www.nuget.org/api/v2/package
   }
 }
 del *.nupkg
