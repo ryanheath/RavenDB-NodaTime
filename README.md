@@ -1,4 +1,4 @@
-Noda Time support for RavenDB
+Noda Time support for RavenDB  [![NuGet Version](https://img.shields.io/nuget/v/RavenDB.Client.NodaTime.svg?style=flat)](https://www.nuget.org/packages/RavenDB.Client.NodaTime/) 
 =============================
 
 This is a custom extension for RavenDB.  
