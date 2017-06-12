@@ -41,7 +41,7 @@ namespace Raven.Client.NodaTime
                 serializer.Converters.Add(NodaConverters.LocalTimeDictionaryKeyConverter);
 
                 // Register custom json converters
-                serializer.Converters.Add(new LocalTimeConverter());
+                serializer.Converters.Add(new RelaxedLocalTimeConverter());
                 serializer.Converters.Add(new NodaDateTimeZoneConverter(zoneProvider));
                 serializer.Converters.Add(new OffsetConverter());
                 serializer.Converters.Add(new RelaxedDurationConverter());
