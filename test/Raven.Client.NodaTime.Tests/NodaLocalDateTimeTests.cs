@@ -32,7 +32,36 @@ namespace Raven.Client.NodaTime.Tests
         {
             using (var documentStore = NewDocumentStore())
             {
+                using (var session = documentStore.OpenSession())
+                {
+                    session.Store(new Foo { Id = "foos/1", LocalDateTime = ldt });
+
+                    // save localdatetime as nodatime localdatetime
+                    session.SaveChanges();
+                }
+
                 documentStore.ConfigureForNodaTime();
+
+                using (var session = documentStore.OpenSession())
+                {
+                    var foo = session.Load<Foo>("foos/1");
+
+                    // we can read localdatetime saved as nodatime localdatetime
+                    Assert.Equal(ldt, foo.LocalDateTime);
+
+                    session.Store(foo);
+
+                    // save duration as full iso pattern
+                    session.SaveChanges();
+                }
+
+                using (var session = documentStore.OpenSession())
+                {
+                    var foo = session.Load<Foo>("foos/1");
+
+                    // we can read localdatetime saved as full iso pattern
+                    Assert.Equal(ldt, foo.LocalDateTime);
+                }
 
                 using (var session = documentStore.OpenSession())
                 {

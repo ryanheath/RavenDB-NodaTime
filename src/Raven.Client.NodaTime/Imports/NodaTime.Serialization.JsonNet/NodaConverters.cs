@@ -31,7 +31,7 @@ namespace Raven.Imports.NodaTime.Serialization.JsonNet
         /// Converter for local dates and times, using the ISO-8601 date/time pattern, extended as required to accommodate milliseconds and ticks.
         /// No time zone designator is applied.
         /// </summary>
-        public static readonly JsonConverter LocalDateTimeConverter = new NodaPatternConverter<LocalDateTime>(
+        public static readonly JsonConverter LocalDateTimeConverter = new RelaxedNodaPatternConverter<LocalDateTime>(
             LocalDateTimePattern.ExtendedIso, CreateIsoValidator<LocalDateTime>(x => x.Calendar));
 
         /// <summary>
