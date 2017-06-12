@@ -38,11 +38,26 @@ namespace Raven.Client.NodaTime.Tests
         {
             using (var documentStore = NewDocumentStore())
             {
+                using (var session = documentStore.OpenSession())
+                {
+                    session.Store(new Foo { Id = "foos/1", Duration = duration });
+
+                    // save duration as nodatime duration
+                    session.SaveChanges();
+                }
+
                 documentStore.ConfigureForNodaTime();
 
                 using (var session = documentStore.OpenSession())
                 {
-                    session.Store(new Foo { Id = "foos/1", Duration = duration });
+                    var foo = session.Load<Foo>("foos/1");
+
+                    // we can read durations saved as nodatime duration
+                    Assert.Equal(duration, foo.Duration);
+
+                    session.Store(foo);
+
+                    // save duration as timespan
                     session.SaveChanges();
                 }
 
@@ -50,6 +65,7 @@ namespace Raven.Client.NodaTime.Tests
                 {
                     var foo = session.Load<Foo>("foos/1");
 
+                    // we can read durations saved as timespan
                     Assert.Equal(duration, foo.Duration);
                 }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using NodaTime;
 using Raven.Imports.Newtonsoft.Json;
+using Raven.Imports.Newtonsoft.Json.Linq;
 using Raven.Imports.NodaTime.Serialization.JsonNet;
 
 namespace Raven.Client.NodaTime.JsonConverters
@@ -20,6 +21,23 @@ namespace Raven.Client.NodaTime.JsonConverters
         {
             var timeSpan = value.ToTimeSpan();
             serializer.Serialize(writer, timeSpan);
+        }
+    }
+
+    /// <summary>
+    /// As DurationConvert but is able to read Durations stored in NodaTime format 
+    /// </summary>
+    internal class RelaxedDurationConverter : DurationConverter
+    {
+        protected override Duration ReadJsonImpl(JsonReader reader, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.StartObject)
+            {
+                var o = JObject.Load(reader);
+                return o.ToObject<Duration>();
+            }
+
+            return base.ReadJsonImpl(reader, serializer);
         }
     }
 }
