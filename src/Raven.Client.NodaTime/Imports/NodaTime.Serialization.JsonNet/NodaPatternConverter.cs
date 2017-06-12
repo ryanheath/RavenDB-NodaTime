@@ -4,9 +4,9 @@
 
 using System;
 using System.IO;
-using NodaTime;
 using Raven.Imports.Newtonsoft.Json;
 using NodaTime.Text;
+using Raven.Imports.Newtonsoft.Json.Linq;
 
 namespace Raven.Imports.NodaTime.Serialization.JsonNet
 {
@@ -15,7 +15,7 @@ namespace Raven.Imports.NodaTime.Serialization.JsonNet
     /// from an <see cref="IPattern{T}"/>.
     /// </summary>
     /// <typeparam name="T">The type to convert to/from JSON.</typeparam>
-    internal sealed class NodaPatternConverter<T> : NodaConverterBase<T>
+    internal class NodaPatternConverter<T> : NodaConverterBase<T>
     {
         private readonly IPattern<T> pattern;
         private readonly Action<T> validator;
@@ -80,6 +80,31 @@ namespace Raven.Imports.NodaTime.Serialization.JsonNet
                 validator(value);
             }
             writer.WriteValue(pattern.Format(value));
+        }
+    }
+
+    /// <summary>
+    /// As RelaxedNodaPatternConvert but is able to read T stored in NodaTime format 
+    /// </summary>
+    internal class RelaxedNodaPatternConverter<T> : NodaPatternConverter<T>
+    {
+        public RelaxedNodaPatternConverter(IPattern<T> pattern) : base(pattern, null)
+        {
+        }
+
+        public RelaxedNodaPatternConverter(IPattern<T> pattern, Action<T> validator) : base(pattern, validator)
+        {
+        }
+
+        protected override T ReadJsonImpl(JsonReader reader, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.StartObject)
+            {
+                var o = JObject.Load(reader);
+                return o.ToObject<T>();
+            }
+
+            return base.ReadJsonImpl(reader, serializer);
         }
     }
 }

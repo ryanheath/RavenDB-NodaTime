@@ -24,7 +24,7 @@ namespace Raven.Imports.NodaTime.Serialization.JsonNet
         /// Converter for local dates, using the ISO-8601 date pattern.
         /// </summary>
         // TODO(Post-V1): Consider improving the behaviour with non-ISO calendars. We probably want a pattern which "knows" about a particular calendar, and restricts itself to that calendar.
-        public static readonly JsonConverter LocalDateConverter = new NodaPatternConverter<LocalDate>(
+        public static readonly JsonConverter LocalDateConverter = new RelaxedNodaPatternConverter<LocalDate>(
             LocalDatePattern.Iso, CreateIsoValidator<LocalDate>(x => x.Calendar));
 
         /// <summary>
