@@ -44,7 +44,7 @@ namespace Raven.Client.NodaTime
                 serializer.Converters.Add(new LocalTimeConverter());
                 serializer.Converters.Add(new NodaDateTimeZoneConverter(zoneProvider));
                 serializer.Converters.Add(new OffsetConverter());
-                serializer.Converters.Add(new DurationConverter());
+                serializer.Converters.Add(new RelaxedDurationConverter());
                 serializer.Converters.Add(new OffsetDateTimeConverter());
                 serializer.Converters.Add(new ZonedDateTimeConverter());
             };
