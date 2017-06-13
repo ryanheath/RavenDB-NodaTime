@@ -24,7 +24,7 @@ namespace Raven.Bundles.NodaTime.Indexing
 
         public static LocalDate AsLocalDate(string value)
         {
-            return LocalDatePattern.IsoPattern.Parse(value).Value;
+            return LocalDatePattern.Iso.Parse(value).Value;
         }
 
         public static LocalTime AsLocalTime(TimeSpan value)
@@ -78,7 +78,7 @@ namespace Raven.Bundles.NodaTime.Indexing
 
         public static string Resolve(LocalDate value)
         {
-            return value.ToString(LocalDatePattern.IsoPattern.PatternText, null);
+            return value.ToString(LocalDatePattern.Iso.PatternText, null);
         }
 
         public static TimeSpan Resolve(LocalTime value)

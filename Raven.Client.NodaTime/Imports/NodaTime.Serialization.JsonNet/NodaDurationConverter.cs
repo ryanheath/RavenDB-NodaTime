@@ -75,11 +75,12 @@ namespace Raven.Imports.NodaTime.Serialization.JsonNet
         /// <param name="serializer">Unused by this serializer</param>
         protected override void WriteJsonImpl(JsonWriter writer, Duration value, JsonSerializer serializer)
         {
-            var hours = value.Ticks / NodaConstants.TicksPerHour;
-            var minutes = (value.Ticks % NodaConstants.TicksPerHour) / NodaConstants.TicksPerMinute;
-            var seconds = (value.Ticks % NodaConstants.TicksPerMinute) / NodaConstants.TicksPerSecond;
-            var milliseconds = (value.Ticks % NodaConstants.TicksPerSecond) / NodaConstants.TicksPerMillisecond;
-            var ticks = value.Ticks % NodaConstants.TicksPerMillisecond;
+            var bclTicks = value.BclCompatibleTicks;
+            var hours = bclTicks / NodaConstants.TicksPerHour;
+            var minutes = (bclTicks % NodaConstants.TicksPerHour) / NodaConstants.TicksPerMinute;
+            var seconds = (bclTicks % NodaConstants.TicksPerMinute) / NodaConstants.TicksPerSecond;
+            var milliseconds = (bclTicks % NodaConstants.TicksPerSecond) / NodaConstants.TicksPerMillisecond;
+            var ticks = bclTicks % NodaConstants.TicksPerMillisecond;
 
             var durationText = string.Format("{0:D2}:{1:D2}:{2:D2}", hours, minutes, seconds);
 

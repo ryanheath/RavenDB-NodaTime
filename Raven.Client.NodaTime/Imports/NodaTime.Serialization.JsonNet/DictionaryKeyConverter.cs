@@ -22,10 +22,15 @@ namespace Raven.Imports.NodaTime.Serialization.JsonNet
         public override bool CanConvert(Type objectType)
         {
             // Use this converter if the type is an IDictionary<T,?>
-            return objectType.GetInterfaces()
-                             .Any(x => x.IsGenericType &&
-                                       typeof(IDictionary<,>).IsAssignableFrom(x.GetGenericTypeDefinition()) &&
-                                       x.GetGenericArguments()[0] == typeof(T));
+            return IsIDictionaryOfT(objectType)
+                || objectType.GetInterfaces().Any(IsIDictionaryOfT);
+        }
+
+        private static bool IsIDictionaryOfT(Type x)
+        {
+            return x.IsGenericType 
+                && typeof(IDictionary<,>).IsAssignableFrom(x.GetGenericTypeDefinition()) 
+                && x.GetGenericArguments()[0] == typeof(T);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -62,7 +67,12 @@ namespace Raven.Imports.NodaTime.Serialization.JsonNet
             serializer.Populate(reader, intermediateDictionary);
 
             // Create the dictionary we want to return, and populate it.
-            var finalDictionary = (IDictionary) Activator.CreateInstance(objectType);
+            var finalDictionaryType =
+                IsIDictionaryOfT(objectType)
+                ? typeof(Dictionary<,>).MakeGenericType(objectType.GetGenericArguments()[0], valueType) // we cannot instantiate an IDictionary, so fallback to a Dictionary<T,?>
+                : objectType; // it is not an IDictionary, so create the real objectType
+
+            var finalDictionary = (IDictionary) Activator.CreateInstance(finalDictionaryType);
             foreach (DictionaryEntry pair in intermediateDictionary)
             {
                 // This will use any converters registered with the serializer.

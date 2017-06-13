@@ -22,7 +22,7 @@ namespace Raven.Client.NodaTime.Tests
         [Fact]
         public void Can_Use_NodaTime_Instant_In_Document_Now()
         {
-            Can_Use_NodaTime_Instant_In_Document(SystemClock.Instance.Now);
+            Can_Use_NodaTime_Instant_In_Document(SystemClock.Instance.GetCurrentInstant());
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace Raven.Client.NodaTime.Tests
         [Fact]
         public void Can_Use_NodaTime_Instant_In_Dynamic_Index_Now()
         {
-            Can_Use_NodaTime_Instant_In_Dynamic_Index1(SystemClock.Instance.Now);
+            Can_Use_NodaTime_Instant_In_Dynamic_Index1(SystemClock.Instance.GetCurrentInstant());
         }
 
         [Fact]
@@ -186,7 +186,7 @@ namespace Raven.Client.NodaTime.Tests
         [Fact]
         public void Can_Use_NodaTime_Instant_In_Static_Index_Now()
         {
-            Can_Use_NodaTime_Instant_In_Static_Index1(SystemClock.Instance.Now);
+            Can_Use_NodaTime_Instant_In_Static_Index1(SystemClock.Instance.GetCurrentInstant());
         }
 
         [Fact]

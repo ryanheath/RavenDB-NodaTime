@@ -50,7 +50,7 @@ namespace Raven.Client.NodaTime.Tests
 
                 var json = documentStore.DatabaseCommands.Get("foos/1").DataAsJson;
                 Debug.WriteLine(json.ToString(Formatting.Indented));
-                var expected = ld.ToString(LocalDatePattern.IsoPattern.PatternText, null);
+                var expected = ld.ToString(LocalDatePattern.Iso.PatternText, null);
                 Assert.Equal(expected, json.Value<string>("LocalDate"));
             }
         }

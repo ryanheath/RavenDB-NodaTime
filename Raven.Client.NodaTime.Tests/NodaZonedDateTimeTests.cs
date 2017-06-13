@@ -26,7 +26,7 @@ namespace Raven.Client.NodaTime.Tests
         [Fact]
         public void Can_Use_NodaTime_ZonedDateTime_In_Document_Now()
         {
-            var instant = SystemClock.Instance.Now;
+            var instant = SystemClock.Instance.GetCurrentInstant();
             var zone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
             var zdt = new ZonedDateTime(instant, zone);
             Can_Use_NodaTime_ZonedDateTime_In_Document(zdt);
@@ -73,7 +73,7 @@ namespace Raven.Client.NodaTime.Tests
         [Fact]
         public void Can_Use_NodaTime_ZonedDateTime_In_Dynamic_Index_Now()
         {
-            var instant = SystemClock.Instance.Now;
+            var instant = SystemClock.Instance.GetCurrentInstant();
             var zone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
             Can_Use_NodaTime_ZonedDateTime_In_Dynamic_Index(new ZonedDateTime(instant, zone));
         }
@@ -118,15 +118,15 @@ namespace Raven.Client.NodaTime.Tests
                                     .OrderBy(x => x.ZonedDateTime.ToInstant());
                     var results2 = q2.ToList();
                     Assert.Equal(2, results2.Count);
-                    Assert.True(results2[0].ZonedDateTime < results2[1].ZonedDateTime);
+                    Assert.True(ZonedDateTime.Comparer.Local.Compare(results2[0].ZonedDateTime, results2[1].ZonedDateTime) < 0);
 
                     var q3 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.ZonedDateTime.ToInstant() <= zdt.ToInstant())
                                     .OrderBy(x => x.ZonedDateTime.ToInstant());
                     var results3 = q3.ToList();
                     Assert.Equal(3, results3.Count);
-                    Assert.True(results3[0].ZonedDateTime < results3[1].ZonedDateTime);
-                    Assert.True(results3[1].ZonedDateTime < results3[2].ZonedDateTime);
+                    Assert.True(ZonedDateTime.Comparer.Local.Compare(results3[0].ZonedDateTime, results3[1].ZonedDateTime) < 0);
+                    Assert.True(ZonedDateTime.Comparer.Local.Compare(results3[1].ZonedDateTime, results3[2].ZonedDateTime) < 0);
                 }
             }
         }
@@ -134,7 +134,7 @@ namespace Raven.Client.NodaTime.Tests
         [Fact]
         public void Can_Use_NodaTime_ZonedDateTime_In_Static_Index_Now()
         {
-            var instant = SystemClock.Instance.Now;
+            var instant = SystemClock.Instance.GetCurrentInstant();
             var zone = DateTimeZoneProviders.Tzdb.GetSystemDefault();
             Can_Use_NodaTime_ZonedDateTime_In_Static_Index(new ZonedDateTime(instant, zone));
         }
@@ -170,19 +170,19 @@ namespace Raven.Client.NodaTime.Tests
                     Assert.Equal(1, results1.Count);
 
                     var q2 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
-                                    .Where(x => x.ZonedDateTime < zdt)
+                                    .Where(x => ZonedDateTime.Comparer.Local.Compare(x.ZonedDateTime, zdt) < 0)
                                     .OrderBy(x => x.ZonedDateTime);
                     var results2 = q2.ToList();
                     Assert.Equal(2, results2.Count);
-                    Assert.True(results2[0].ZonedDateTime < results2[1].ZonedDateTime);
+                    Assert.True(ZonedDateTime.Comparer.Local.Compare(results2[0].ZonedDateTime, results2[1].ZonedDateTime) < 0);
 
                     var q3 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
-                                    .Where(x => x.ZonedDateTime <= zdt)
+                                    .Where(x => ZonedDateTime.Comparer.Local.Compare(x.ZonedDateTime, zdt) <= 0)
                                     .OrderBy(x => x.ZonedDateTime);
                     var results3 = q3.ToList();
                     Assert.Equal(3, results3.Count);
-                    Assert.True(results3[0].ZonedDateTime < results3[1].ZonedDateTime);
-                    Assert.True(results3[1].ZonedDateTime < results3[2].ZonedDateTime);
+                    Assert.True(ZonedDateTime.Comparer.Local.Compare(results3[0].ZonedDateTime, results3[1].ZonedDateTime) < 0);
+                    Assert.True(ZonedDateTime.Comparer.Local.Compare(results3[1].ZonedDateTime, results3[2].ZonedDateTime) < 0);
                 }
             }
         }
@@ -190,7 +190,7 @@ namespace Raven.Client.NodaTime.Tests
         [Fact]
         public void Can_Use_NodaTime_ZonedDateTime_In_Static_MapReduceIndex()
         {
-            var zdt = SystemClock.Instance.Now.InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
+            var zdt = SystemClock.Instance.GetCurrentInstant().InZone(DateTimeZoneProviders.Tzdb.GetSystemDefault());
 
             using (var documentStore = NewDocumentStore())
             {
