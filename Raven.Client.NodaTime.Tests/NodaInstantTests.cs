@@ -44,9 +44,9 @@ namespace Raven.Client.NodaTime.Tests
         }
 
         [Fact]
-        public void Cannot_Use_NodaTime_Instant_In_Document_When_Too_Large()
+        public void Can_Use_NodaTime_Instant_In_Document_Instant_MaxValue()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => Can_Use_NodaTime_Instant_In_Document(Instant.MaxValue));
+            Can_Use_NodaTime_Instant_In_Document(Instant.MaxValue);
         }
 
         private void Can_Use_NodaTime_Instant_In_Document(Instant instant)
@@ -65,7 +65,7 @@ namespace Raven.Client.NodaTime.Tests
                 {
                     var foo = session.Load<Foo>("foos/1");
 
-                    Assert.Equal(instant, foo.Instant);
+                    Assert.Equal(instant.ToUnixTimeTicks(), foo.Instant.ToUnixTimeTicks());
                 }
 
                 var json = documentStore.DatabaseCommands.Get("foos/1").DataAsJson;
@@ -100,9 +100,9 @@ namespace Raven.Client.NodaTime.Tests
         }
 
         [Fact]
-        public void Cannot_Use_NodaTime_Instant_In_Dynamic_Index_When_Too_Large()
+        public void Can_Use_NodaTime_Instant_In_Dynamic_Index_MaxValue()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => Can_Use_NodaTime_Instant_In_Dynamic_Index2(Instant.MaxValue));
+            Can_Use_NodaTime_Instant_In_Dynamic_Index2(Instant.MaxValue);
         }
 
         private void Can_Use_NodaTime_Instant_In_Dynamic_Index1(Instant instant)
@@ -208,9 +208,9 @@ namespace Raven.Client.NodaTime.Tests
         }
 
         [Fact]
-        public void Cannot_Use_NodaTime_Instant_In_Static_Index_When_Too_Large()
+        public void Can_Use_NodaTime_Instant_In_Static_Index_MaxValue()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => Can_Use_NodaTime_Instant_In_Static_Index2(Instant.MaxValue));
+            Can_Use_NodaTime_Instant_In_Static_Index2(Instant.MaxValue);
         }
 
         private void Can_Use_NodaTime_Instant_In_Static_Index1(Instant instant)
