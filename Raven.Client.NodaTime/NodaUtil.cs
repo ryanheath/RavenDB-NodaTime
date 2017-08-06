@@ -14,17 +14,17 @@ namespace Raven.Client.NodaTime
 
             public static global::NodaTime.Instant MinIsoValue
             {
-                get { return new global::NodaTime.Instant(MinIsoTicks); }
+                get { return global::NodaTime.Instant.FromUnixTimeTicks(MinIsoTicks); }
             }
 
             public static global::NodaTime.Instant MaxIsoValue
             {
-                get { return new global::NodaTime.Instant(MaxIsoTicks); }
+                get { return global::NodaTime.Instant.FromUnixTimeTicks(MaxIsoTicks); }
             }
 
             internal static void Validate(global::NodaTime.Instant instant)
             {
-                if (instant.Ticks >= MinIsoTicks && instant.Ticks <= MaxIsoTicks)
+                if (instant.ToUnixTimeTicks() >= MinIsoTicks && instant.ToUnixTimeTicks() <= MaxIsoTicks)
                     return;
 
                 var message = "NodaTime Instant values must fall between UTC years 0001 and 9999 to be compatible with RavenDB.";
@@ -113,7 +113,7 @@ namespace Raven.Client.NodaTime
 
             public static global::NodaTime.LocalTime MaxIsoValue
             {
-                get { return new global::NodaTime.LocalTime(23, 59, 59, 999, 9999); }
+                get { return global::NodaTime.LocalTime.FromHourMinuteSecondMillisecondTick(23, 59, 59, 999, 9999); }
             }
 
             public static global::NodaTime.LocalTime Now

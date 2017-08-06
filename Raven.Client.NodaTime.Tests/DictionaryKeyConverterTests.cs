@@ -14,7 +14,7 @@ namespace Raven.Client.NodaTime.Tests
             {
                 documentStore.ConfigureForNodaTime();
 
-                Instant i1 = SystemClock.Instance.Now;
+                Instant i1 = SystemClock.Instance.GetCurrentInstant();
                 Instant i2 = i1 + Duration.FromHours(1);
 
                 using (var session = documentStore.OpenSession())
@@ -41,7 +41,7 @@ namespace Raven.Client.NodaTime.Tests
             {
                 documentStore.ConfigureForNodaTime();
 
-                Instant i1 = SystemClock.Instance.Now;
+                Instant i1 = SystemClock.Instance.GetCurrentInstant();
                 Instant i2 = i1 + Duration.FromHours(1);
 
                 using (var session = documentStore.OpenSession())

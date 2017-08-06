@@ -255,7 +255,7 @@ namespace Raven.Client.NodaTime.Tests
                     let daysInPeriod = fromDate.DaysBetween(toDate)
                     from day in Enumerable.Range(0, daysInPeriod)
                     let date = fromDate.PlusDays(day)
-                    let hours = schedule.BusinessHours.FirstOrDefault(x => x.DayOfWeek.ToString() == date.IsoDayOfWeek.ToString())
+                    let hours = schedule.BusinessHours.FirstOrDefault(x => x.DayOfWeek.ToString() == date.DayOfWeek.ToString())
                     let localOpen = date + hours.Open.AsLocalTime()
                     let localClose = date.PlusDays(hours.Close > hours.Open ? 0 : 1) + hours.Close.AsLocalTime()
                     select new

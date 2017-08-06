@@ -13,7 +13,7 @@ namespace Raven.Client.NodaTime.Tests
         [Fact]
         public void Can_Use_NodaTime_Interval_In_Document()
         {
-            var now = SystemClock.Instance.Now;
+            var now = SystemClock.Instance.GetCurrentInstant();
             var start = now - Duration.FromMinutes(5);
             var end = now + Duration.FromMinutes(5);
             var interval = new Interval(start, end);
@@ -47,7 +47,7 @@ namespace Raven.Client.NodaTime.Tests
         [Fact]
         public void Can_Use_NodaTime_Interval_In_Dynamic_Index()
         {
-            var now = SystemClock.Instance.Now;
+            var now = SystemClock.Instance.GetCurrentInstant();
             var start = now - Duration.FromMinutes(5);
             var end = now + Duration.FromMinutes(5);
             var interval1 = new Interval(start, end);
@@ -91,7 +91,7 @@ namespace Raven.Client.NodaTime.Tests
         [Fact]
         public void Can_Use_NodaTime_Interval_In_Static_Index()
         {
-            var now = SystemClock.Instance.Now;
+            var now = SystemClock.Instance.GetCurrentInstant();
             var start = now - Duration.FromMinutes(5);
             var end = now + Duration.FromMinutes(5);
             var interval1 = new Interval(start, end);

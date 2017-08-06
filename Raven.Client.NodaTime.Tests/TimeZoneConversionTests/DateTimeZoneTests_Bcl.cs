@@ -28,7 +28,7 @@ namespace Raven.Client.NodaTime.Tests.TimeZoneConversionTests
 
                 using (var session = documentStore.OpenSession())
                 {
-                    session.Store(new Foo { Instant = SystemClock.Instance.Now });
+                    session.Store(new Foo { Instant = SystemClock.Instance.GetCurrentInstant() });
                     session.SaveChanges();
                 }
 

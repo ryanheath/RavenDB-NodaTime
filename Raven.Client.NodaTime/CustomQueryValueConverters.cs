@@ -25,7 +25,7 @@ namespace Raven.Client.NodaTime
 
         public static bool LocalDateConverter(string name, LocalDate value, QueryValueConvertionType type, out string strValue)
         {
-            strValue = value.ToString(LocalDatePattern.IsoPattern.PatternText, null);
+            strValue = value.ToString(LocalDatePattern.Iso.PatternText, null);
 
             return true;
         }
@@ -67,7 +67,7 @@ namespace Raven.Client.NodaTime
         {
             if (type == QueryValueConvertionType.Range)
             {
-                strValue = NumberUtil.NumberToString(value.Ticks);
+                strValue = NumberUtil.NumberToString(value.BclCompatibleTicks);
 
                 return true;
             }
