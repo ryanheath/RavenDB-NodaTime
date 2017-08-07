@@ -3,17 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raven.Client.NodaTime", "Raven.Client.NodaTime\Raven.Client.NodaTime.csproj", "{0F858C9B-0345-4ED8-93F9-6EC838F22CCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raven.Client.NodaTime", "src\Raven.Client.NodaTime\Raven.Client.NodaTime.csproj", "{0F858C9B-0345-4ED8-93F9-6EC838F22CCC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B008615-31F3-4752-A8D1-A88CB78CA674}"
-	ProjectSection(SolutionItems) = preProject
-		LICENSE.txt = LICENSE.txt
-		README.md = README.md
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raven.Client.NodaTime.Tests", "test\Raven.Client.NodaTime.Tests\Raven.Client.NodaTime.Tests.csproj", "{02FE11E5-C2FA-4EDA-8E8B-2AB0D427B116}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raven.Client.NodaTime.Tests", "Raven.Client.NodaTime.Tests\Raven.Client.NodaTime.Tests.csproj", "{02FE11E5-C2FA-4EDA-8E8B-2AB0D427B116}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raven.Bundles.NodaTime", "Raven.Bundles.NodaTime\Raven.Bundles.NodaTime.csproj", "{7C3250F7-BA94-4A0C-9E6A-944CC3EE2FBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raven.Bundles.NodaTime", "src\Raven.Bundles.NodaTime\Raven.Bundles.NodaTime.csproj", "{7C3250F7-BA94-4A0C-9E6A-944CC3EE2FBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
