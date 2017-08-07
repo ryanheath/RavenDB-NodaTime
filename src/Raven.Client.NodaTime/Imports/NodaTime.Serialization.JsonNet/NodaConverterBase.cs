@@ -4,6 +4,7 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 using Raven.Imports.Newtonsoft.Json;
 
 namespace Raven.Imports.NodaTime.Serialization.JsonNet
@@ -15,7 +16,7 @@ namespace Raven.Imports.NodaTime.Serialization.JsonNet
     /// <typeparam name="T">The type to convert to/from JSON.</typeparam>
     internal abstract class NodaConverterBase<T> : JsonConverter
     {
-        private static readonly Type NullableT = typeof(T).IsValueType ? typeof(Nullable<>).MakeGenericType(typeof(T)) : typeof(T);
+        private static readonly Type NullableT = typeof(T).GetTypeInfo().IsValueType ? typeof(Nullable<>).MakeGenericType(typeof(T)) : typeof(T);
 
         /// <summary>
         /// Returns whether or not this converter supports the given type.
