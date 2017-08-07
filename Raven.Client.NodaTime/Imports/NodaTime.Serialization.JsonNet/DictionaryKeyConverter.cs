@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Raven.Imports.Newtonsoft.Json;
 using Raven.Imports.Newtonsoft.Json.Linq;
 
@@ -28,7 +29,7 @@ namespace Raven.Imports.NodaTime.Serialization.JsonNet
 
         private static bool IsIDictionaryOfT(Type x)
         {
-            return x.IsGenericType 
+            return x.GetTypeInfo().IsGenericType 
                 && typeof(IDictionary<,>).IsAssignableFrom(x.GetGenericTypeDefinition()) 
                 && x.GetGenericArguments()[0] == typeof(T);
         }

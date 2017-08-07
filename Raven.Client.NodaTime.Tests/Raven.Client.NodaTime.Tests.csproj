@@ -1,116 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{02FE11E5-C2FA-4EDA-8E8B-2AB0D427B116}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Raven.Client.NodaTime.Tests</RootNamespace>
-    <AssemblyName>Raven.Client.NodaTime.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <TargetFramework>net45</TargetFramework>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NodaTime, Version=2.0.3.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NodaTime.2.0.3\lib\net45\NodaTime.dll</HintPath>
-    </Reference>
-    <Reference Include="Raven.Abstractions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Tests.Helpers.3.5.0\lib\net45\Raven.Abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Raven.Client.Lightweight, Version=3.5.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Client.3.5.0\lib\net45\Raven.Client.Lightweight.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Raven.Database, Version=3.5.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Database.3.5.0\lib\net45\Raven.Database.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Raven.Server, Version=3.5.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
-      <HintPath>..\packages\RavenDB.Tests.Helpers.3.5.0\lib\net45\Raven.Server.exe</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Raven.Tests.Helpers, Version=3.5.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=AMD64">
-      <HintPath>..\packages\RavenDB.Tests.Helpers.3.5.0\lib\net45\Raven.Tests.Helpers.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
-    <Reference Include="xunit">
-      <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\Raven.Bundles.NodaTime\Raven.Bundles.NodaTime.csproj" />
+    <ProjectReference Include="..\Raven.Client.NodaTime\Raven.Client.NodaTime.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SharedAssemblyInfo.cs">
-      <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="ComplexTest.cs" />
-    <Compile Include="NodaDateTimeZoneTests.cs" />
-    <Compile Include="NodaDurationTests.cs" />
-    <Compile Include="DictionaryKeyConverterTests.cs" />
-    <Compile Include="NodaInstantTests.cs" />
-    <Compile Include="NodaIntervalTests.cs" />
-    <Compile Include="NodaLocalDateTests.cs" />
-    <Compile Include="NodaLocalDateTimeTests.cs" />
-    <Compile Include="NodaLocalTimeTests.cs" />
-    <Compile Include="NodaOffsetDateTimeTests.cs" />
-    <Compile Include="NodaOffsetTests.cs" />
-    <Compile Include="NodaPeriodTests.cs" />
-    <Compile Include="NodaZonedDateTimeTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestExtensions.cs" />
-    <Compile Include="TimeZoneConversionTests\DateTimeZoneTests_Tzdb.cs" />
-    <Compile Include="TimeZoneConversionTests\DateTimeZoneTests_Bcl.cs" />
-    <Compile Include="TimeZoneConversionTests\TimeZoneInfoTests.cs" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Include="NodaTime" Version="2.0.0" />
+    <PackageReference Include="RavenDB.Client" Version="3.5.0" />
+    <PackageReference Include="RavenDB.Database" Version="3.5.0" />
+    <PackageReference Include="RavenDB.Tests.Helpers" Version="3.5.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    <PackageReference Include="xunit" Version="2.2.0" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Raven.Bundles.NodaTime\Raven.Bundles.NodaTime.csproj">
-      <Project>{7C3250F7-BA94-4A0C-9E6A-944CC3EE2FBB}</Project>
-      <Name>Raven.Bundles.NodaTime</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Raven.Client.NodaTime\Raven.Client.NodaTime.csproj">
-      <Project>{0f858c9b-0345-4ed8-93f9-6ec838f22ccc}</Project>
-      <Name>Raven.Client.NodaTime</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
