@@ -11,6 +11,9 @@ namespace Raven.Client.NodaTime.JsonConverters
 
         public static readonly JsonConverter LocalDateTimeConverter = new NodaPatternConverter<LocalDateTime>(NodaUtil.LocalDateTime.FullIsoPattern,
                                                                                                               CreateIsoValidator<LocalDateTime>(x => x.Calendar));
+        public static readonly JsonConverter RelaxedLocalDateTimeConverter = new RelaxedNodaPatternConverter<LocalDateTime>(NodaUtil.LocalDateTime.FullIsoPattern,
+                                                                                                              ConverterParsers.ToLocalDateTime,
+                                                                                                              CreateIsoValidator<LocalDateTime>(x => x.Calendar));
 
         private static Action<T> CreateIsoValidator<T>(Func<T, CalendarSystem> calendarProjection)
         {

@@ -9,13 +9,13 @@ namespace Raven.Client.NodaTime
 {
     public static class Extensions
     {
-        public static T ConfigureForNodaTime<T>(this T documentStore)
+        public static T ConfigureForNodaTime<T>(this T documentStore, bool registerRelaxedConverts = false)
             where T : IDocumentStore
         {
-            return documentStore.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
+            return documentStore.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb, registerRelaxedConverts);
         }
 
-        public static T ConfigureForNodaTime<T>(this T documentStore, IDateTimeZoneProvider zoneProvider)
+        public static T ConfigureForNodaTime<T>(this T documentStore, IDateTimeZoneProvider zoneProvider, bool registerRelaxedConverts = false)
             where T : IDocumentStore
         {
             var existing = documentStore.Conventions.CustomizeJsonSerializer;
@@ -32,8 +32,8 @@ namespace Raven.Client.NodaTime
                 // Register standard json converters
                 serializer.Converters.Add(CustomPatternBasedJsonConverters.InstantConverter);
                 serializer.Converters.Add(NodaConverters.IntervalConverter);
-                serializer.Converters.Add(CustomPatternBasedJsonConverters.LocalDateTimeConverter);
-                serializer.Converters.Add(NodaConverters.LocalDateConverter);
+                serializer.Converters.Add(registerRelaxedConverts ? CustomPatternBasedJsonConverters.RelaxedLocalDateTimeConverter : CustomPatternBasedJsonConverters.LocalDateTimeConverter);
+                serializer.Converters.Add(registerRelaxedConverts ? NodaConverters.RelaxedLocalDateConverter : NodaConverters.LocalDateConverter);
                 serializer.Converters.Add(NodaConverters.RoundtripPeriodConverter);
                 serializer.Converters.Add(NodaConverters.InstantDictionaryKeyConverter);
                 serializer.Converters.Add(NodaConverters.LocalDateDictionaryKeyConverter);
@@ -41,10 +41,10 @@ namespace Raven.Client.NodaTime
                 serializer.Converters.Add(NodaConverters.LocalTimeDictionaryKeyConverter);
 
                 // Register custom json converters
-                serializer.Converters.Add(new LocalTimeConverter());
+                serializer.Converters.Add(registerRelaxedConverts ? new RelaxedLocalTimeConverter() : new LocalTimeConverter());
                 serializer.Converters.Add(new NodaDateTimeZoneConverter(zoneProvider));
                 serializer.Converters.Add(new OffsetConverter());
-                serializer.Converters.Add(new DurationConverter());
+                serializer.Converters.Add(registerRelaxedConverts ? new RelaxedDurationConverter() : new DurationConverter());
                 serializer.Converters.Add(new OffsetDateTimeConverter());
                 serializer.Converters.Add(new ZonedDateTimeConverter());
             };
