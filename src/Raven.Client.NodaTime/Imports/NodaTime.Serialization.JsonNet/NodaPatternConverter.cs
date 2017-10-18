@@ -131,5 +131,18 @@ namespace Raven.Imports.NodaTime.Serialization.JsonNet
             var calendar = CalendarSystem.ForId(id == "Iso" ? "ISO" : id); // for some reason ISO is persisted as Iso ...
             return new LocalDate(year, month, day, calendar);
         }
+
+        public static LocalDateTime ToLocalDateTime(JObject o)
+        {
+            // we cannot depend on o.ToObject<T> here
+            // since for some reason the calendar property will be read as a number while it is not ...
+            var year = o.GetValue("year").Value<int>();
+            var month = o.GetValue("month").Value<int>();
+            var day = o.GetValue("day").Value<int>();
+            var nanoSecondsOfDay = o.GetValue("nanoOfDay").Value<long>();
+            var id = o.GetValue("calendar").Value<string>();
+            var calendar = CalendarSystem.ForId(id == "Iso" ? "ISO" : id); // for some reason ISO is persisted as Iso ...
+            return new LocalDateTime(year, month, day, 0, 0, calendar).PlusNanoseconds(nanoSecondsOfDay);
+        }
     }
 }
