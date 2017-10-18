@@ -9,13 +9,13 @@ namespace Raven.Client.NodaTime
 {
     public static class Extensions
     {
-        public static T ConfigureForNodaTime<T>(this T documentStore)
+        public static T ConfigureForNodaTime<T>(this T documentStore, bool registerRelaxedConverts = false)
             where T : IDocumentStore
         {
-            return documentStore.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
+            return documentStore.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb, registerRelaxedConverts);
         }
 
-        public static T ConfigureForNodaTime<T>(this T documentStore, IDateTimeZoneProvider zoneProvider)
+        public static T ConfigureForNodaTime<T>(this T documentStore, IDateTimeZoneProvider zoneProvider, bool registerRelaxedConverts = false)
             where T : IDocumentStore
         {
             var existing = documentStore.Conventions.CustomizeJsonSerializer;
@@ -44,7 +44,7 @@ namespace Raven.Client.NodaTime
                 serializer.Converters.Add(new RelaxedLocalTimeConverter());
                 serializer.Converters.Add(new NodaDateTimeZoneConverter(zoneProvider));
                 serializer.Converters.Add(new OffsetConverter());
-                serializer.Converters.Add(new RelaxedDurationConverter());
+                serializer.Converters.Add(registerRelaxedConverts ? new RelaxedDurationConverter() : new DurationConverter());
                 serializer.Converters.Add(new OffsetDateTimeConverter());
                 serializer.Converters.Add(new ZonedDateTimeConverter());
             };
