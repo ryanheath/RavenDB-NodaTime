@@ -10,52 +10,70 @@ namespace Raven.Client.NodaTime.Tests
 {
     public class NodaDurationTests : RavenTestBase
     {
-        [Fact]
-        public void Can_Use_NodaTime_Duration_In_Document_Positive()
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void Can_Use_NodaTime_Duration_In_Document_Positive(bool useRelaxedConverters)
         {
-            Can_Use_NodaTime_Duration_In_Document(Duration.FromHours(2));
+            Can_Use_NodaTime_Duration_In_Document(Duration.FromHours(2), useRelaxedConverters);
         }
 
-        [Fact]
-        public void Can_Use_NodaTime_Duration_In_Document_Negative()
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void Can_Use_NodaTime_Duration_In_Document_Negative(bool useRelaxedConverters)
         {
-            Can_Use_NodaTime_Duration_In_Document(Duration.FromHours(-5));
+            Can_Use_NodaTime_Duration_In_Document(Duration.FromHours(-5), useRelaxedConverters);
         }
 
-        [Fact]
-        public void Can_Use_NodaTime_Duration_In_Document_Min()
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void Can_Use_NodaTime_Duration_In_Document_Min(bool useRelaxedConverters)
         {
-            Can_Use_NodaTime_Duration_In_Document(NodaUtil.Duration.MinValue);
+            Can_Use_NodaTime_Duration_In_Document(NodaUtil.Duration.MinValue, useRelaxedConverters);
         }
 
-        [Fact]
-        public void Can_Use_NodaTime_Duration_In_Document_Max()
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void Can_Use_NodaTime_Duration_In_Document_Max(bool useRelaxedConverters)
         {
-            Can_Use_NodaTime_Duration_In_Document(NodaUtil.Duration.MaxValue);
+            Can_Use_NodaTime_Duration_In_Document(NodaUtil.Duration.MaxValue, useRelaxedConverters);
         }
 
-        private void Can_Use_NodaTime_Duration_In_Document(Duration duration)
+        private void Can_Use_NodaTime_Duration_In_Document(Duration duration, bool useRelaxedConverters)
         {
             using (var documentStore = NewDocumentStore())
             {
-                using (var session = documentStore.OpenSession())
+                if (useRelaxedConverters)
                 {
-                    session.Store(new Foo { Id = "foos/1", Duration = duration });
+                    using (var session = documentStore.OpenSession())
+                    {
+                        session.Store(new Foo {Id = "foos/1", Duration = duration});
 
-                    // save duration as nodatime duration
-                    session.SaveChanges();
+                        // save duration as nodatime duration
+                        session.SaveChanges();
+                    }
                 }
 
-                documentStore.ConfigureForNodaTime();
+                documentStore.ConfigureForNodaTime(useRelaxedConverters);
 
                 using (var session = documentStore.OpenSession())
                 {
-                    var foo = session.Load<Foo>("foos/1");
+                    if (useRelaxedConverters)
+                    {
+                        var foo = session.Load<Foo>("foos/1");
 
-                    // we can read durations saved as nodatime duration
-                    Assert.Equal(duration, foo.Duration);
+                        // we can read durations saved as nodatime duration
+                        Assert.Equal(duration, foo.Duration);
 
-                    session.Store(foo);
+                        session.Store(foo);
+                    }
+                    else
+                    {
+                        session.Store(new Foo { Id = "foos/1", Duration = duration });
+                    }
 
                     // save duration as timespan
                     session.SaveChanges();
