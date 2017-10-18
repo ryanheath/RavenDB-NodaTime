@@ -24,14 +24,18 @@ namespace Raven.Imports.NodaTime.Serialization.JsonNet
         /// Converter for local dates, using the ISO-8601 date pattern.
         /// </summary>
         // TODO(Post-V1): Consider improving the behaviour with non-ISO calendars. We probably want a pattern which "knows" about a particular calendar, and restricts itself to that calendar.
-        public static readonly JsonConverter LocalDateConverter = new RelaxedNodaPatternConverter<LocalDate>(
+        public static readonly JsonConverter LocalDateConverter = new NodaPatternConverter<LocalDate>(
             LocalDatePattern.Iso, CreateIsoValidator<LocalDate>(x => x.Calendar));
+        public static readonly JsonConverter RelaxedLocalDateConverter = new RelaxedNodaPatternConverter<LocalDate>(
+            LocalDatePattern.Iso, ConverterParsers.ToLocalDate, CreateIsoValidator<LocalDate>(x => x.Calendar));
 
         /// <summary>
         /// Converter for local dates and times, using the ISO-8601 date/time pattern, extended as required to accommodate milliseconds and ticks.
         /// No time zone designator is applied.
         /// </summary>
-        public static readonly JsonConverter LocalDateTimeConverter = new RelaxedNodaPatternConverter<LocalDateTime>(
+        public static readonly JsonConverter LocalDateTimeConverter = new NodaPatternConverter<LocalDateTime>(
+            LocalDateTimePattern.ExtendedIso, CreateIsoValidator<LocalDateTime>(x => x.Calendar));
+        public static readonly JsonConverter RelaxedLocalDateTimeConverter = new RelaxedNodaPatternConverter<LocalDateTime>(
             LocalDateTimePattern.ExtendedIso, CreateIsoValidator<LocalDateTime>(x => x.Calendar));
 
         /// <summary>

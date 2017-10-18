@@ -4,6 +4,7 @@
 
 using System;
 using System.IO;
+using NodaTime;
 using Raven.Imports.Newtonsoft.Json;
 using NodaTime.Text;
 using Raven.Imports.Newtonsoft.Json.Linq;
@@ -88,12 +89,16 @@ namespace Raven.Imports.NodaTime.Serialization.JsonNet
     /// </summary>
     internal class RelaxedNodaPatternConverter<T> : NodaPatternConverter<T>
     {
-        public RelaxedNodaPatternConverter(IPattern<T> pattern) : base(pattern, null)
+        private readonly Func<JObject, T> parser;
+
+        public RelaxedNodaPatternConverter(IPattern<T> pattern, Func<JObject,T> parser) : base(pattern, null)
         {
+            this.parser = parser;
         }
 
-        public RelaxedNodaPatternConverter(IPattern<T> pattern, Action<T> validator) : base(pattern, validator)
+        public RelaxedNodaPatternConverter(IPattern<T> pattern, Func<JObject, T> parser, Action<T> validator) : base(pattern, validator)
         {
+            this.parser = parser;
         }
 
         protected override T ReadJsonImpl(JsonReader reader, JsonSerializer serializer)
@@ -101,10 +106,30 @@ namespace Raven.Imports.NodaTime.Serialization.JsonNet
             if (reader.TokenType == JsonToken.StartObject)
             {
                 var o = JObject.Load(reader);
-                return o.ToObject<T>();
+                return parser(o);
             }
 
             return base.ReadJsonImpl(reader, serializer);
+        }
+    }
+
+    public static class ConverterParsers
+    {
+        public static T ToObject<T>(JObject o)
+        {
+            return o.ToObject<T>();
+        }
+
+        public static LocalDate ToLocalDate(JObject o)
+        {
+            // we cannot depend on o.ToObject<T> here
+            // since for some reason the calendar property will be read as a number while it is not ...
+            var year = o.GetValue("year").Value<int>();
+            var month = o.GetValue("month").Value<int>();
+            var day = o.GetValue("day").Value<int>();
+            var id = o.GetValue("calendar").Value<string>();
+            var calendar = CalendarSystem.ForId(id == "Iso" ? "ISO" : id); // for some reason ISO is persisted as Iso ...
+            return new LocalDate(year, month, day, calendar);
         }
     }
 }
