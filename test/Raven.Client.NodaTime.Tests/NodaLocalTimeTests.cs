@@ -10,46 +10,62 @@ namespace Raven.Client.NodaTime.Tests
 {
     public class NodaLocalTimeTests : RavenTestBase
     {
-        [Fact]
-        public void Can_Use_NodaTime_LocalTime_In_Document_Now()
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void Can_Use_NodaTime_LocalTime_In_Document_Now(bool useRelaxedConverters)
         {
-            Can_Use_NodaTime_LocalTime_In_Document(NodaUtil.LocalTime.Now);
+            Can_Use_NodaTime_LocalTime_In_Document(NodaUtil.LocalTime.Now, useRelaxedConverters);
         }
 
-        [Fact]
-        public void Can_Use_NodaTime_LocalTime_In_Document_IsoMin()
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void Can_Use_NodaTime_LocalTime_In_Document_IsoMin(bool useRelaxedConverters)
         {
-            Can_Use_NodaTime_LocalTime_In_Document(NodaUtil.LocalTime.MinIsoValue);
+            Can_Use_NodaTime_LocalTime_In_Document(NodaUtil.LocalTime.MinIsoValue, useRelaxedConverters);
         }
 
-        [Fact]
-        public void Can_Use_NodaTime_LocalTime_In_Document_IsoMax()
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void Can_Use_NodaTime_LocalTime_In_Document_IsoMax(bool useRelaxedConverters)
         {
-            Can_Use_NodaTime_LocalTime_In_Document(NodaUtil.LocalTime.MaxIsoValue);
+            Can_Use_NodaTime_LocalTime_In_Document(NodaUtil.LocalTime.MaxIsoValue, useRelaxedConverters);
         }
 
-        private void Can_Use_NodaTime_LocalTime_In_Document(LocalTime lt)
+        private void Can_Use_NodaTime_LocalTime_In_Document(LocalTime lt, bool useRelaxedConverters)
         {
             using (var documentStore = NewDocumentStore())
             {
-                using (var session = documentStore.OpenSession())
+                if (useRelaxedConverters)
                 {
-                    session.Store(new Foo { Id = "foos/1", LocalTime = lt });
+                    using (var session = documentStore.OpenSession())
+                    {
+                        session.Store(new Foo {Id = "foos/1", LocalTime = lt});
 
-                    // save localtime as nodatime localdate
-                    session.SaveChanges();
+                        // save localtime as nodatime localdate
+                        session.SaveChanges();
+                    }
                 }
 
-                documentStore.ConfigureForNodaTime();
+                documentStore.ConfigureForNodaTime(useRelaxedConverters);
 
                 using (var session = documentStore.OpenSession())
                 {
-                    var foo = session.Load<Foo>("foos/1");
+                    if (useRelaxedConverters)
+                    {
+                        var foo = session.Load<Foo>("foos/1");
 
-                    // we can read localtime saved as nodatime localtime
-                    Assert.Equal(lt, foo.LocalTime);
+                        // we can read localtime saved as nodatime localtime
+                        Assert.Equal(lt, foo.LocalTime);
 
-                    session.Store(foo);
+                        session.Store(foo);
+                    }
+                    else
+                    {
+                        session.Store(new Foo { Id = "foos/1", LocalTime = lt });
+                    }
 
                     // save duration as timespan
                     session.SaveChanges();
