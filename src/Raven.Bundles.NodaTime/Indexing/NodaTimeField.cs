@@ -50,21 +50,19 @@ namespace Raven.Bundles.NodaTime.Indexing
             return OffsetDateTime.FromDateTimeOffset(value);
         }
 
-        public static ZonedDateTime AsZonedDateTime(DynamicJsonObject obj)
-        {
-            var dto = (DateTimeOffset) obj.GetValue("OffsetDateTime");
-            var zone = (string) obj.GetValue("Zone");
+        //public static ZonedDateTime AsZonedDateTime(blit obj)
+        //{
+        //    var dto = (DateTimeOffset) obj.GetValue("OffsetDateTime");
+        //    var zone = (string) obj.GetValue("Zone");
 
-            var odt = OffsetDateTime.FromDateTimeOffset(dto);
-            var tz = DateTimeZoneProviders.Tzdb.GetZoneOrNull(zone);
-            if (tz == null)
-                DateTimeZoneProviders.Bcl.GetZoneOrNull(zone);
-            if (tz == null)
-                throw new InvalidDataException("Unrecognized Time Zone");
+        //    var odt = OffsetDateTime.FromDateTimeOffset(dto);
+        //    var tz = DateTimeZoneProviders.Tzdb.GetZoneOrNull(zone);
+        //    if (tz == null)
+        //        throw new InvalidDataException("Unrecognized Time Zone");
 
-            var zdt = new ZonedDateTime(odt.ToInstant(), tz);
-            return zdt;
-        }
+        //    var zdt = new ZonedDateTime(odt.ToInstant(), tz);
+        //    return zdt;
+        //}
 
         public static DateTime Resolve(Instant value)
         {
@@ -101,14 +99,14 @@ namespace Raven.Bundles.NodaTime.Indexing
             return value.ToDateTimeOffset();
         }
 
-        public static RavenJObject Resolve(ZonedDateTime value)
-        {
-            return new RavenJObject
-                   {
-                       { "OffsetDateTime", value.ToDateTimeOffset() },
-                       { "Zone", value.Zone.Id }
-                   };
-        }
+        //public static RavenJObject Resolve(ZonedDateTime value)
+        //{
+        //    return new RavenJObject
+        //           {
+        //               { "OffsetDateTime", value.ToDateTimeOffset() },
+        //               { "Zone", value.Zone.Id }
+        //           };
+        //}
 
         public static int DaysBetween(LocalDate localDate1, LocalDate localDate2)
         {
