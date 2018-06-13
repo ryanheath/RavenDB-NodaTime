@@ -4,8 +4,8 @@
 
 using System;
 using System.IO;
+using Newtonsoft.Json;
 using NodaTime;
-using Raven.Imports.Newtonsoft.Json;
 
 namespace Raven.Imports.NodaTime.Serialization.JsonNet
 {

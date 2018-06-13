@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Raven.Client.Linq;
+using Raven.Client.Documents.Linq;
 
 namespace Raven.Client.NodaTime
 {

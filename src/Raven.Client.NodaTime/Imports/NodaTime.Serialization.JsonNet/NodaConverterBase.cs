@@ -5,7 +5,7 @@
 using System;
 using System.IO;
 using System.Reflection;
-using Raven.Imports.Newtonsoft.Json;
+using Newtonsoft.Json;
 
 namespace Raven.Imports.NodaTime.Serialization.JsonNet
 {

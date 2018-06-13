@@ -1,7 +1,8 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using Raven.Imports.Newtonsoft.Json;
+using Newtonsoft.Json;
+using Raven.Client.Documents;
 
 namespace Raven.Client.NodaTime.Tests
 {

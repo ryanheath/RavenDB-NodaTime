@@ -1,6 +1,6 @@
 ﻿using System.IO;
+using Newtonsoft.Json;
 using NodaTime;
-using Raven.Imports.Newtonsoft.Json;
 using Raven.Imports.NodaTime.Serialization.JsonNet;
 
 namespace Raven.Client.NodaTime.JsonConverters

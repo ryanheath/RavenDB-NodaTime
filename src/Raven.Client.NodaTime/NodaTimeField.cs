@@ -1,5 +1,5 @@
 ﻿using NodaTime;
-using Raven.Client.Indexes;
+using Raven.Client.Documents.Indexes;
 
 namespace Raven.Client.NodaTime
 {

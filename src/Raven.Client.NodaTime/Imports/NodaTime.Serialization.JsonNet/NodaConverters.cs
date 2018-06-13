@@ -3,8 +3,8 @@
 // as found in the LICENSE.txt file.
 
 using System;
+using Newtonsoft.Json;
 using NodaTime;
-using Raven.Imports.Newtonsoft.Json;
 using NodaTime.Text;
 
 namespace Raven.Imports.NodaTime.Serialization.JsonNet
