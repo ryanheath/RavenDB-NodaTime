@@ -2,10 +2,8 @@ using System;
 using System.IO;
 using NodaTime;
 using NodaTime.Text;
-using Raven.Abstractions.Linq;
-using Raven.Json.Linq;
 
-namespace Raven.Bundles.NodaTime.Indexing
+namespace Raven.Bundles.NodaTime
 {
     public static class NodaTimeField
     {
