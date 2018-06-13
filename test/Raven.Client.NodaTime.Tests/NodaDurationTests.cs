@@ -53,7 +53,7 @@ namespace Raven.Client.NodaTime.Tests
 
                 var json = documentStore.DatabaseCommands.Get("foos/1").DataAsJson;
                 Debug.WriteLine(json.ToString(Formatting.Indented));
-                var expected = duration.ToTimeSpan().ToString();
+                    var expected = duration.ToTimeSpan().ToString();
                 Assert.Equal(expected, json.Value<string>("Duration"));
             }
         }
@@ -185,12 +185,13 @@ namespace Raven.Client.NodaTime.Tests
             using (var documentStore = NewDocumentStore())
             {
                 documentStore.ExecuteIndex(new TestIndex());
+                documentStore.ExecuteIndex(new TestTSIndex());
 
                 using (var session = documentStore.OpenSession())
                 {
-                    session.Store(new Foo { Id = "foos/1", Duration = duration });
-                    session.Store(new Foo { Id = "foos/2", Duration = duration + Duration.FromHours(1) });
-                    session.Store(new Foo { Id = "foos/3", Duration = duration + Duration.FromHours(2) });
+                    session.Store(new Foo { Id = "foos/1", Duration = duration, Timespan = TimeSpan.FromHours(-2) });
+                    session.Store(new Foo { Id = "foos/2", Duration = duration + Duration.FromHours(1), Timespan = TimeSpan.FromHours(-1) });
+                    session.Store(new Foo { Id = "foos/3", Duration = duration + Duration.FromHours(2), Timespan = TimeSpan.FromHours(1) });
                     session.SaveChanges();
                 }
 
@@ -199,7 +200,17 @@ namespace Raven.Client.NodaTime.Tests
                     var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.Duration == duration);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
+
+                    var qts1 = session.Query<Foo, TestTSIndex>().Customize(x => x.WaitForNonStaleResults())
+                        .Where(x => x.Timespan == TimeSpan.FromHours(-2));
+                    var resultsts1 = qts1.ToList();
+
+                    var qts2 = session.Query<Foo, TestTSIndex>().Customize(x => x.WaitForNonStaleResults())
+                        .Where(x => x.Timespan > TimeSpan.FromHours(-1.5))
+                        .OrderByDescending(x => x.Timespan);
+                    var resultsts2 = qts2.ToList();
+
 
                     var q2 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.Duration > duration)
@@ -262,6 +273,7 @@ namespace Raven.Client.NodaTime.Tests
         {
             public string Id { get; set; }
             public Duration Duration { get; set; }
+            public TimeSpan Timespan { get; set; }
         }
 
         public class TestIndex : AbstractIndexCreationTask<Foo>
@@ -273,6 +285,19 @@ namespace Raven.Client.NodaTime.Tests
                               {
                                   foo.Duration
                               };
+
+            }
+        }
+
+        public class TestTSIndex : AbstractIndexCreationTask<Foo>
+        {
+            public TestTSIndex()
+            {
+                Map = foos => from foo in foos
+                    select new
+                    {
+                        foo.Timespan
+                    };
 
             }
         }

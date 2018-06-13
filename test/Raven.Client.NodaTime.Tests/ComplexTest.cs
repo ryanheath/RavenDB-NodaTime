@@ -1,18 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.Composition.Hosting;
-using System.Diagnostics;
 using System.Linq;
 using NodaTime;
-using Raven.Abstractions.Indexing;
-using Raven.Bundles.NodaTime;
-using Raven.Client.Indexes;
-using Raven.Database.Config;
-using Raven.Tests.Helpers;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Indexes;
 using Xunit;
 
 namespace Raven.Client.NodaTime.Tests
 {
-    public class ComplexTest : RavenTestBase
+    public class ComplexTest : MyRavenTestDriver
     {
         public class Business
         {
@@ -47,7 +42,6 @@ namespace Raven.Client.NodaTime.Tests
         {
             using (var documentStore = NewDocumentStore())
             {
-                documentStore.ConfigureForNodaTime();
                 documentStore.ExecuteIndex(new SchedulesIndex());
 
                 PopulateSchedules(documentStore);
@@ -76,7 +70,6 @@ namespace Raven.Client.NodaTime.Tests
         {
             using (var documentStore = NewDocumentStore())
             {
-                documentStore.ConfigureForNodaTime();
                 documentStore.ExecuteIndex(new SchedulesIndex());
 
                 PopulateSchedules(documentStore);
@@ -269,12 +262,13 @@ namespace Raven.Client.NodaTime.Tests
                     };
 
                 StoreAllFields(FieldStorage.Yes);
+
+                AdditionalSources = new Dictionary<string, string> {
+                    { "Raven.Client.NodaTime", NodaTimeCompilationExtension.AdditionalSources },
+                    { "Raven.Client.NodaTime2", NodaTimeCompilationExtension.AdditionalSources2 }
+                };
             }
         }
 
-        protected override void ModifyConfiguration(InMemoryRavenConfiguration configuration)
-        {
-            configuration.Catalog.Catalogs.Add(new AssemblyCatalog(typeof(NodaTimeCompilationExtension).Assembly));
-        }
     }
 }

@@ -15,10 +15,6 @@ namespace Raven.Client.NodaTime.Tests
         //       are meaningless.  ZonedDateTime is only for values that are actually
         //       valid at some point in the time zone's history.
 
-        protected override void ModifyConfiguration(InMemoryRavenConfiguration configuration)
-        {
-            configuration.Catalog.Catalogs.Add(new AssemblyCatalog(typeof(NodaTimeCompilationExtension).Assembly));
-        }
 
         [Fact]
         public void Can_Use_NodaTime_ZonedDateTime_In_Document_Now()
@@ -58,8 +54,8 @@ namespace Raven.Client.NodaTime.Tests
                 var json = documentStore.DatabaseCommands.Get("foos/1").DataAsJson;
                 Debug.WriteLine(json.ToString(Formatting.Indented));
 
-                var expectedDateTime = zdt.ToDateTimeOffset().ToString("o");
-                var expectedZone = zdt.Zone.Id;
+                    var expectedDateTime = zdt.ToDateTimeOffset().ToString("o");
+                    var expectedZone = zdt.Zone.Id;
                 Assert.Equal(expectedDateTime, json["ZonedDateTime"].Value<string>("OffsetDateTime"));
                 Assert.Equal(expectedZone, json["ZonedDateTime"].Value<string>("Zone"));
             }
@@ -221,6 +217,11 @@ namespace Raven.Client.NodaTime.Tests
                                   // If you map the OffsetDatetime value here, you don't need to call .ToInstant() method in the query.
                                   ZonedDateTime = foo.ZonedDateTime.AsZonedDateTime().ToOffsetDateTime().Resolve()
                               };
+
+                AdditionalSources = new Dictionary<string, string> {
+                    { "Raven.Client.NodaTime", NodaTimeCompilationExtension.AdditionalSources },
+                    { "Raven.Client.NodaTime2", NodaTimeCompilationExtension.AdditionalSources2 }
+                };
             }
         }
 
@@ -247,6 +248,11 @@ namespace Raven.Client.NodaTime.Tests
                                         Value = g.Max(x => x.Value)
                                     };
 
+
+                AdditionalSources = new Dictionary<string, string> {
+                    { "Raven.Client.NodaTime", NodaTimeCompilationExtension.AdditionalSources },
+                    { "Raven.Client.NodaTime2", NodaTimeCompilationExtension.AdditionalSources2 }
+                };
             }
         }
     }

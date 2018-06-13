@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition.Hosting;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
 using NodaTime;
 using Raven.Client.Documents;
@@ -10,10 +9,6 @@ namespace Raven.Client.NodaTime.Tests.TimeZoneConversionTests
 {
     public class DateTimeZoneTests_Tzdb : MyRavenTestDriver
     {
-        protected override void ModifyConfiguration(InMemoryRavenConfiguration configuration)
-        {
-            configuration.Catalog.Catalogs.Add(new AssemblyCatalog(typeof(NodaTimeCompilationExtension).Assembly));
-        }
 
         [Fact]
         public void Can_Convert_TimeZone_Using_Tzdb_DateTimeZone_In_Static_Index()
@@ -77,6 +72,11 @@ namespace Raven.Client.NodaTime.Tests.TimeZoneConversionTests
                                          DateTimePacific = instant.InZone(zones["America/Los_Angeles"]).LocalDateTime.Resolve(),
                                      };
                 StoreAllFields(FieldStorage.Yes);
+
+                AdditionalSources = new Dictionary<string, string> {
+                    { "Raven.Client.NodaTime", NodaTimeCompilationExtension.AdditionalSources },
+                    { "Raven.Client.NodaTime2", NodaTimeCompilationExtension.AdditionalSources2 }
+                };
             }
         }
     }
