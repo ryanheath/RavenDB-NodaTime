@@ -52,10 +52,16 @@ namespace Raven.Client.NodaTime.Tests
                     Assert.Equal(period, foo.Period);
                 }
 
-                var json = documentStore.DatabaseCommands.Get("foos/1").DataAsJson;
-                Debug.WriteLine(json.ToString(Formatting.Indented));
-                var expected = period.ToString();
-                Assert.Equal(expected, json.Value<string>("Period"));
+                using (var session = documentStore.OpenSession())
+                {
+                    var command = new GetDocumentsCommand("foos/1", null, false);
+                    session.Advanced.RequestExecutor.Execute(command, session.Advanced.Context);
+                    var json = (BlittableJsonReaderObject)command.Result.Results[0];
+                    System.Diagnostics.Debug.WriteLine(json.ToString());
+                    var expected = period.ToString();
+                    json.TryGet("Period", out string value);
+                    Assert.Equal(expected, value);
+                }
             }
         }
 

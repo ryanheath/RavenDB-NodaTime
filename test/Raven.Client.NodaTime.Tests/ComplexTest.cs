@@ -53,10 +53,10 @@ namespace Raven.Client.NodaTime.Tests
                 using (var session = documentStore.OpenSession())
                 {
                     var q = session.Query<HoursForDate, SchedulesIndex>()
-                        .ProjectFromIndexFieldsInto<HoursForDate>()
+                        .ProjectInto<HoursForDate>()
                         .Take(1024);
 
-                    Debug.WriteLine(q);
+                    System.Diagnostics.Debug.WriteLine(q);
 
                     var results = q.ToList();
 
@@ -85,9 +85,9 @@ namespace Raven.Client.NodaTime.Tests
 
                     var q = session.Query<HoursForDate, SchedulesIndex>()
                         .Where(x => x.Open <= now && x.Close > now)
-                        .ProjectFromIndexFieldsInto<HoursForDate>();
+                        .ProjectInto<HoursForDate>();
 
-                    Debug.WriteLine(q);
+                    System.Diagnostics.Debug.WriteLine(q);
 
                     var results = q.ToList();
 
@@ -241,7 +241,7 @@ namespace Raven.Client.NodaTime.Tests
                     from schedule in schedules
 
                     let business = LoadDocument<Business>(schedule.BusinessId)
-                    let tz = DateTimeZoneProviders.Tzdb[business.TimeZone]
+                    let tz = global::NodaTime.DateTimeZoneProviders.Tzdb[business.TimeZone]
 
                     let fromDate = schedule.FromDate.AsLocalDate()
                     let toDate = schedule.ToDate.AsLocalDate()

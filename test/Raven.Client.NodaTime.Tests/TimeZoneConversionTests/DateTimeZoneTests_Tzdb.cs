@@ -30,14 +30,14 @@ namespace Raven.Client.NodaTime.Tests.TimeZoneConversionTests
                 using (var session = documentStore.OpenSession())
                 {
                     var result = session.Query<Foo, Foo_ByDate_MultiZone>()
-                                        .ProjectFromIndexFieldsInto<Result>()
+                                        .ProjectInto<Result>()
                                         .First();
 
-                    Debug.WriteLine("UTC:      {0}", result.Instant);
-                    Debug.WriteLine("Eastern:  {0:s}", result.DateTimeEastern);
-                    Debug.WriteLine("Central:  {0:s}", result.DateTimeCentral);
-                    Debug.WriteLine("Mountain: {0:s}", result.DateTimeMountain);
-                    Debug.WriteLine("Pacific:  {0:s}", result.DateTimePacific);
+                    System.Diagnostics.Debug.WriteLine("UTC:      {0}", result.Instant);
+                    System.Diagnostics.Debug.WriteLine("Eastern:  {0:s}", result.DateTimeEastern);
+                    System.Diagnostics.Debug.WriteLine("Central:  {0:s}", result.DateTimeCentral);
+                    System.Diagnostics.Debug.WriteLine("Mountain: {0:s}", result.DateTimeMountain);
+                    System.Diagnostics.Debug.WriteLine("Pacific:  {0:s}", result.DateTimePacific);
                 }
             }
         }

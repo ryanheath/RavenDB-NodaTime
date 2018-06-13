@@ -44,10 +44,16 @@ namespace Raven.Client.NodaTime.Tests
                     Assert.Equal(ldt, foo.LocalDateTime);
                 }
 
-                var json = documentStore.DatabaseCommands.Get("foos/1").DataAsJson;
-                Debug.WriteLine(json.ToString(Formatting.Indented));
-                var expected = ldt.ToString(NodaUtil.LocalDateTime.FullIsoPattern.PatternText, null);
-                Assert.Equal(expected, json.Value<string>("LocalDateTime"));
+                using (var session = documentStore.OpenSession())
+                {
+                    var command = new GetDocumentsCommand("foos/1", null, false);
+                    session.Advanced.RequestExecutor.Execute(command, session.Advanced.Context);
+                    var json = (BlittableJsonReaderObject)command.Result.Results[0];
+                    System.Diagnostics.Debug.WriteLine(json.ToString());
+                    var expected = ldt.ToString(NodaUtil.LocalDateTime.FullIsoPattern.PatternText, null);
+                    json.TryGet("LocalDateTime", out string value);
+                    Assert.Equal(expected, value);
+                }
             }
         }
 

@@ -32,12 +32,21 @@ namespace Raven.Client.NodaTime.Tests
                     Assert.Equal(interval, foo.Interval);
                 }
 
-                var json = documentStore.DatabaseCommands.Get("foos/1").DataAsJson;
-                Debug.WriteLine(json.ToString(Formatting.Indented));
-                var expectedStart = interval.Start.ToString(NodaUtil.Instant.FullIsoPattern.PatternText, null);
-                var expectedEnd = interval.End.ToString(NodaUtil.Instant.FullIsoPattern.PatternText, null);
-                Assert.Equal(expectedStart, json["Interval"].Value<string>("Start"));
-                Assert.Equal(expectedEnd, json["Interval"].Value<string>("End"));
+                using (var session = documentStore.OpenSession())
+                {
+                    var command = new GetDocumentsCommand("foos/1", null, false);
+                    session.Advanced.RequestExecutor.Execute(command, session.Advanced.Context);
+                    var json = (BlittableJsonReaderObject)command.Result.Results[0];
+                    System.Diagnostics.Debug.WriteLine(json.ToString());
+                    var expectedStart = interval.Start.ToString(NodaUtil.Instant.FullIsoPattern.PatternText, null);
+                    var expectedEnd = interval.End.ToString(NodaUtil.Instant.FullIsoPattern.PatternText, null);
+                    json.TryGetMember("Interval", out var obj);
+                    var bInterval = obj as BlittableJsonReaderObject;
+                    bInterval.TryGet("Start", out string valueStart);
+                    bInterval.TryGet("End", out string valueEnd);
+                    Assert.Equal(expectedStart, valueStart);
+                    Assert.Equal(expectedEnd, valueEnd);
+                }
             }
         }
 

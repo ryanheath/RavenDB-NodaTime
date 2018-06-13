@@ -50,10 +50,16 @@ namespace Raven.Client.NodaTime.Tests
                     Assert.Equal(offset, foo.Offset);
                 }
 
-                var json = documentStore.DatabaseCommands.Get("foos/1").DataAsJson;
-                Debug.WriteLine(json.ToString(Formatting.Indented));
-                var expected = offset.ToTimeSpan().ToString("c");
-                Assert.Equal(expected, json.Value<string>("Offset"));
+                using (var session = documentStore.OpenSession())
+                {
+                    var command = new GetDocumentsCommand("foos/1", null, false);
+                    session.Advanced.RequestExecutor.Execute(command, session.Advanced.Context);
+                    var json = (BlittableJsonReaderObject)command.Result.Results[0];
+                    System.Diagnostics.Debug.WriteLine(json.ToString());
+                    var expected = offset.ToTimeSpan().ToString("c");
+                    json.TryGet("Offset", out string value);
+                    Assert.Equal(expected, value);
+                }
             }
         }
 

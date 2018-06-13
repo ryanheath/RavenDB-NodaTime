@@ -51,13 +51,21 @@ namespace Raven.Client.NodaTime.Tests
                     Assert.Equal(zdt, foo.ZonedDateTime);
                 }
 
-                var json = documentStore.DatabaseCommands.Get("foos/1").DataAsJson;
-                Debug.WriteLine(json.ToString(Formatting.Indented));
-
+                using (var session = documentStore.OpenSession())
+                {
+                    var command = new GetDocumentsCommand("foos/1", null, false);
+                    session.Advanced.RequestExecutor.Execute(command, session.Advanced.Context);
+                    var json = (BlittableJsonReaderObject)command.Result.Results[0];
+                    System.Diagnostics.Debug.WriteLine(json.ToString());
                     var expectedDateTime = zdt.ToDateTimeOffset().ToString("o");
                     var expectedZone = zdt.Zone.Id;
-                Assert.Equal(expectedDateTime, json["ZonedDateTime"].Value<string>("OffsetDateTime"));
-                Assert.Equal(expectedZone, json["ZonedDateTime"].Value<string>("Zone"));
+                    json.TryGetMember("ZonedDateTime", out var obj);
+                    var bInterval = obj as BlittableJsonReaderObject;
+                    bInterval.TryGet("OffsetDateTime", out string value1);
+                    bInterval.TryGet("Zone", out string value2);
+                    Assert.Equal(expectedDateTime, value1);
+                    Assert.Equal(expectedZone, value2);
+                }
             }
         }
 
@@ -97,7 +105,7 @@ namespace Raven.Client.NodaTime.Tests
 
                     var q1 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.ZonedDateTime.ToInstant() == zdt.ToInstant());
-                    Debug.WriteLine(q1);
+                    System.Diagnostics.Debug.WriteLine(q1);
                     var results1 = q1.ToList();
                     WaitForUserToContinueTheTest(documentStore);
                     Assert.Single(results1);

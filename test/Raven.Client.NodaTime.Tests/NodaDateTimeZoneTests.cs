@@ -29,9 +29,15 @@ namespace Raven.Client.NodaTime.Tests
                     Assert.Equal(zone, foo.DateTimeZone);
                 }
 
-                var json = documentStore.DatabaseCommands.Get("foos/1").DataAsJson;
-                Debug.WriteLine(json.ToString(Formatting.Indented));
-                Assert.Equal(zone.Id, json.Value<string>("DateTimeZone"));
+                using (var session = documentStore.OpenSession())
+                {
+                    var command = new GetDocumentsCommand("foos/1", null, false);
+                    session.Advanced.RequestExecutor.Execute(command, session.Advanced.Context);
+                    var json = (BlittableJsonReaderObject) command.Result.Results[0];
+                    System.Diagnostics.Debug.WriteLine(json.ToString());
+                    json.TryGet("DateTimeZone", out string value);
+                    Assert.Equal(zone.Id, value);
+                }
             }
         }
 
