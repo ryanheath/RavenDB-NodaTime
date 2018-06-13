@@ -99,7 +99,7 @@ namespace Raven.Client.NodaTime.Tests
                 {
                     var q1 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults()).OrderBy(x => x.Period).Where(x => x.Period == period);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     // Period does not implement IComparable, so you can't query with greater then or less than
                 }
@@ -122,7 +122,7 @@ namespace Raven.Client.NodaTime.Tests
                 {
                     var q1 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.Period == period);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     // Period does not implement IComparable, so you can't query with greater then or less than
                 }
@@ -171,7 +171,7 @@ namespace Raven.Client.NodaTime.Tests
                 {
                     var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.Period == period);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     // Period does not implement IComparable, so you can't query with greater then or less than
                 }
@@ -196,7 +196,7 @@ namespace Raven.Client.NodaTime.Tests
                 {
                     var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults()).Where(x => x.Period == period);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     // Period does not implement IComparable, so you can't query with greater then or less than
                 }

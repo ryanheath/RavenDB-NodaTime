@@ -65,13 +65,13 @@ namespace Raven.Client.NodaTime.Tests
                                     .Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.Interval.Start == interval1.Start && x.Interval.End == interval1.End);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     var q2 = session.Query<Foo>()
                                     .Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.Interval.Start <= now && x.Interval.End > now);
                     var results2 = q2.ToList();
-                    Assert.Equal(1, results2.Count);
+                    Assert.Single(results2);
 
                     var q3 = session.Query<Foo>()
                                     .Customize(x => x.WaitForNonStaleResults())
@@ -109,13 +109,13 @@ namespace Raven.Client.NodaTime.Tests
                                     .Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.Interval.Start == interval1.Start && x.Interval.End == interval1.End);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     var q2 = session.Query<Foo, TestIndex>()
                                     .Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.Interval.Start <= now && x.Interval.End > now);
                     var results2 = q2.ToList();
-                    Assert.Equal(1, results2.Count);
+                    Assert.Single(results2);
 
                     var q3 = session.Query<Foo>()
                                     .Customize(x => x.WaitForNonStaleResults())

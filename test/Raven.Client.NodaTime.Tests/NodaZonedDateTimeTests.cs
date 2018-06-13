@@ -104,7 +104,7 @@ namespace Raven.Client.NodaTime.Tests
                     Debug.WriteLine(q1);
                     var results1 = q1.ToList();
                     WaitForUserToContinueTheTest(documentStore);
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     var q2 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.ZonedDateTime.ToInstant() < zdt.ToInstant())
@@ -159,7 +159,7 @@ namespace Raven.Client.NodaTime.Tests
                     var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.ZonedDateTime == zdt);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     var q2 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => ZonedDateTime.Comparer.Local.Compare(x.ZonedDateTime, zdt) < 0)

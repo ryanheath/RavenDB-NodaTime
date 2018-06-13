@@ -86,7 +86,7 @@ namespace Raven.Client.NodaTime.Tests
                     var q1 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.LocalTime == lt);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     var q2 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.LocalTime > lt)
@@ -124,7 +124,7 @@ namespace Raven.Client.NodaTime.Tests
                     var q1 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.LocalTime == lt);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     var q2 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.LocalTime < lt)
@@ -181,7 +181,7 @@ namespace Raven.Client.NodaTime.Tests
                     var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.LocalTime == lt);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     var q2 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.LocalTime > lt)
@@ -220,7 +220,7 @@ namespace Raven.Client.NodaTime.Tests
                     var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.LocalTime == lt);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     var q2 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.LocalTime < lt)

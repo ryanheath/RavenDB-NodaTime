@@ -87,7 +87,7 @@ namespace Raven.Client.NodaTime.Tests
                     var q1 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.OffsetDateTime == odt);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     // OffsetDateTime is not directly comparable.
                     // Depending on context, one will either convert to an Instant, or just compare the LocalDateTime component.
@@ -151,7 +151,7 @@ namespace Raven.Client.NodaTime.Tests
                     var q1 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.OffsetDateTime == odt);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     // OffsetDateTime is not directly comparable.
                     // Depending on context, one will either convert to an Instant, or just compare the LocalDateTime component.
@@ -227,7 +227,7 @@ namespace Raven.Client.NodaTime.Tests
                     var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.OffsetDateTime == odt);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     // OffsetDateTime is not directly comparable.
                     // Depending on context, one will either convert to an Instant, or just compare the LocalDateTime component.
@@ -297,7 +297,7 @@ namespace Raven.Client.NodaTime.Tests
                     var q1 = session.Query<Foo, TestIndex>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.OffsetDateTime == odt);
                     var results1 = q1.ToList();
-                    Assert.Equal(1, results1.Count);
+                    Assert.Single(results1);
 
                     // OffsetDateTime is not directly comparable.
                     // Depending on context, one will either convert to an Instant, or just compare the LocalDateTime component.
