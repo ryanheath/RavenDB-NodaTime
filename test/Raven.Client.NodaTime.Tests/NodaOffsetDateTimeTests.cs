@@ -257,8 +257,8 @@ namespace Raven.Client.NodaTime.Tests
                     var q4 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
                                     .Where(x => x.OffsetDateTime.LocalDateTime > odt.LocalDateTime)
                                     .OrderByDescending(x => x.OffsetDateTime.LocalDateTime);
-                    Debug.WriteLine(q4);
-                    WaitForUserToContinueTheTest(documentStore);
+                    System.Diagnostics.Debug.WriteLine(q4);
+                    //WaitForUserToContinueTheTest(documentStore);
                     var results4 = q4.ToList();
                     Assert.Equal(2, results4.Count);
                     Assert.True(results4[0].OffsetDateTime.LocalDateTime > results4[1].OffsetDateTime.LocalDateTime);

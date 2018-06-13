@@ -25,7 +25,7 @@ namespace Raven.Client.NodaTime.Tests.TimeZoneConversionTests
 
                 WaitForIndexing(documentStore);
 
-                WaitForUserToContinueTheTest(documentStore);
+                //WaitForUserToContinueTheTest(documentStore);
 
                 using (var session = documentStore.OpenSession())
                 {

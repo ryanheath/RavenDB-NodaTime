@@ -48,7 +48,7 @@ namespace Raven.Client.NodaTime.Tests
 
                 WaitForIndexing(documentStore);
 
-                WaitForUserToContinueTheTest(documentStore);
+                //WaitForUserToContinueTheTest(documentStore);
 
                 using (var session = documentStore.OpenSession())
                 {
@@ -76,7 +76,7 @@ namespace Raven.Client.NodaTime.Tests
 
                 WaitForIndexing(documentStore);
 
-                WaitForUserToContinueTheTest(documentStore);
+                //WaitForUserToContinueTheTest(documentStore);
 
                 using (var session = documentStore.OpenSession())
                 {

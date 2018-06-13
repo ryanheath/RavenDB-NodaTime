@@ -97,7 +97,7 @@ namespace Raven.Client.NodaTime.Tests
                     session.SaveChanges();
                 }
 
-                WaitForUserToContinueTheTest(documentStore);
+                //WaitForUserToContinueTheTest(documentStore);
 
                 using (var session = documentStore.OpenSession())
                 {
@@ -107,7 +107,7 @@ namespace Raven.Client.NodaTime.Tests
                                     .Where(x => x.ZonedDateTime.ToInstant() == zdt.ToInstant());
                     System.Diagnostics.Debug.WriteLine(q1);
                     var results1 = q1.ToList();
-                    WaitForUserToContinueTheTest(documentStore);
+                    //WaitForUserToContinueTheTest(documentStore);
                     Assert.Single(results1);
 
                     var q2 = session.Query<Foo>().Customize(x => x.WaitForNonStaleResults())
