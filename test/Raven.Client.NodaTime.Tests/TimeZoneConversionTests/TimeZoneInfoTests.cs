@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
-using Raven.Abstractions.Indexing;
-using Raven.Client.Indexes;
-using Raven.Tests.Helpers;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Indexes;
 using Xunit;
 
 namespace Raven.Client.NodaTime.Tests.TimeZoneConversionTests
 {
-    public class TimeZoneInfoTests : RavenTestBase
+    public class TimeZoneInfoTests : MyRavenTestDriver
     {
         [Fact]
         public void Can_Convert_TimeZone_Using_TimeZoneInfo_In_Static_Index()

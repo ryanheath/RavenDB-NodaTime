@@ -2,16 +2,13 @@
 using System.Diagnostics;
 using System.Linq;
 using NodaTime;
-using Raven.Abstractions.Indexing;
-using Raven.Bundles.NodaTime;
-using Raven.Client.Indexes;
-using Raven.Database.Config;
-using Raven.Tests.Helpers;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Indexes;
 using Xunit;
 
 namespace Raven.Client.NodaTime.Tests.TimeZoneConversionTests
 {
-    public class DateTimeZoneTests_Tzdb : RavenTestBase
+    public class DateTimeZoneTests_Tzdb : MyRavenTestDriver
     {
         protected override void ModifyConfiguration(InMemoryRavenConfiguration configuration)
         {
@@ -23,7 +20,6 @@ namespace Raven.Client.NodaTime.Tests.TimeZoneConversionTests
         {
             using (var documentStore = NewDocumentStore())
             {
-                documentStore.ConfigureForNodaTime();
                 documentStore.ExecuteIndex(new Foo_ByDate_MultiZone());
 
                 using (var session = documentStore.OpenSession())

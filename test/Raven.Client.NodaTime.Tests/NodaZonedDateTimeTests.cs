@@ -1,17 +1,14 @@
-﻿using System.ComponentModel.Composition.Hosting;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
 using NodaTime;
-using Raven.Bundles.NodaTime;
-using Raven.Client.Indexes;
-using Raven.Database.Config;
-using Raven.Imports.Newtonsoft.Json;
-using Raven.Tests.Helpers;
+using Raven.Client.Documents.Commands;
+using Raven.Client.Documents.Indexes;
+using Sparrow.Json;
 using Xunit;
 
 namespace Raven.Client.NodaTime.Tests
 {
-    public class NodaZonedDateTimeTests : RavenTestBase
+    public class NodaZonedDateTimeTests : MyRavenTestDriver
     {
         // NOTE: Tests are intentionally omited for very early dates.
         //       This is because most of the timezones did not exist then, so their values
@@ -45,8 +42,6 @@ namespace Raven.Client.NodaTime.Tests
         {
             using (var documentStore = NewDocumentStore())
             {
-                documentStore.ConfigureForNodaTime();
-
                 using (var session = documentStore.OpenSession())
                 {
                     session.Store(new Foo { Id = "foos/1", ZonedDateTime = zdt });
@@ -90,8 +85,6 @@ namespace Raven.Client.NodaTime.Tests
         {
             using (var documentStore = NewDocumentStore())
             {
-                documentStore.ConfigureForNodaTime();
-
                 using (var session = documentStore.OpenSession())
                 {
                     session.Store(new Foo { Id = "foos/1", ZonedDateTime = zdt });
@@ -151,7 +144,6 @@ namespace Raven.Client.NodaTime.Tests
         {
             using (var documentStore = NewDocumentStore())
             {
-                documentStore.ConfigureForNodaTime();
                 documentStore.ExecuteIndex(new TestIndex());
 
                 using (var session = documentStore.OpenSession())
@@ -194,7 +186,6 @@ namespace Raven.Client.NodaTime.Tests
 
             using (var documentStore = NewDocumentStore())
             {
-                documentStore.ConfigureForNodaTime();
                 documentStore.ExecuteIndex(new TestIndex2());
 
                 using (var session = documentStore.OpenSession())

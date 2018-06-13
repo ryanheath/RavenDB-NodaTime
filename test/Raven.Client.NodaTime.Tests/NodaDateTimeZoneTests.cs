@@ -1,14 +1,13 @@
-﻿using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using NodaTime;
-using Raven.Client.Indexes;
-using Raven.Imports.Newtonsoft.Json;
-using Raven.Tests.Helpers;
+using Raven.Client.Documents.Commands;
+using Raven.Client.Documents.Indexes;
+using Sparrow.Json;
 using Xunit;
 
 namespace Raven.Client.NodaTime.Tests
 {
-    public class NodaDateTimeZoneTests : RavenTestBase
+    public class NodaDateTimeZoneTests : MyRavenTestDriver
     {
         [Fact]
         public void Can_Use_NodaTime_DateTimeZone_In_Document()
@@ -17,8 +16,6 @@ namespace Raven.Client.NodaTime.Tests
 
             using (var documentStore = NewDocumentStore())
             {
-                documentStore.ConfigureForNodaTime();
-
                 using (var session = documentStore.OpenSession())
                 {
                     session.Store(new Foo { Id = "foos/1", DateTimeZone = zone });
@@ -45,8 +42,6 @@ namespace Raven.Client.NodaTime.Tests
 
             using (var documentStore = NewDocumentStore())
             {
-                documentStore.ConfigureForNodaTime();
-
                 using (var session = documentStore.OpenSession())
                 {
                     session.Store(new Foo { Id = "foos/1", DateTimeZone = zone });
@@ -69,7 +64,6 @@ namespace Raven.Client.NodaTime.Tests
 
             using (var documentStore = NewDocumentStore())
             {
-                documentStore.ConfigureForNodaTime();
                 documentStore.ExecuteIndex(new TestIndex());
 
                 using (var session = documentStore.OpenSession())
