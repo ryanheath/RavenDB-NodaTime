@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
 using NodaTime;
-using Raven.Abstractions.Indexing;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Indexes;
 using Raven.Client.NodaTime.JsonConverters;
 using Raven.Imports.NodaTime.Serialization.JsonNet;
 
@@ -53,9 +54,9 @@ namespace Raven.Client.NodaTime
             documentStore.Conventions.RegisterQueryValueConverter<Instant>(CustomQueryValueConverters.InstantConverter);
             documentStore.Conventions.RegisterQueryValueConverter<LocalDateTime>(CustomQueryValueConverters.LocalDateTimeConverter);
             documentStore.Conventions.RegisterQueryValueConverter<LocalDate>(CustomQueryValueConverters.LocalDateConverter);
-            documentStore.Conventions.RegisterQueryValueConverter<LocalTime>(CustomQueryValueConverters.LocalTimeConverter, SortOptions.Long, true);
-            documentStore.Conventions.RegisterQueryValueConverter<Offset>(CustomQueryValueConverters.OffsetConverter, SortOptions.Long, true);
-            documentStore.Conventions.RegisterQueryValueConverter<Duration>(CustomQueryValueConverters.DurationConverter, SortOptions.Long, true);
+            documentStore.Conventions.RegisterQueryValueConverter<LocalTime>(CustomQueryValueConverters.LocalTimeConverter, RangeType.Long);
+            documentStore.Conventions.RegisterQueryValueConverter<Offset>(CustomQueryValueConverters.OffsetConverter, RangeType.Long);
+            documentStore.Conventions.RegisterQueryValueConverter<Duration>(CustomQueryValueConverters.DurationConverter, RangeType.Long);
             documentStore.Conventions.RegisterQueryValueConverter<OffsetDateTime>(CustomQueryValueConverters.OffsetDateTimeConverter);
             documentStore.Conventions.RegisterQueryValueConverter<Period>(CustomQueryValueConverters.PeriodConverter);
             documentStore.Conventions.RegisterQueryValueConverter<ZonedDateTime>(CustomQueryValueConverters.ZonedDateTimeConverter);

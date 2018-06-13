@@ -1,13 +1,13 @@
-﻿using NodaTime;
+﻿using System;
+using System.Globalization;
+using NodaTime;
 using NodaTime.Text;
-using Raven.Abstractions.Indexing;
-using Raven.Client.Document;
 
 namespace Raven.Client.NodaTime
 {
     internal class CustomQueryValueConverters
     {
-        public static bool InstantConverter(string name, Instant value, QueryValueConvertionType type, out string strValue)
+        public static bool InstantConverter(string name, Instant value, bool forRange, out string strValue)
         {
             NodaUtil.Instant.Validate(value);
 
@@ -16,14 +16,14 @@ namespace Raven.Client.NodaTime
             return true;
         }
 
-        public static bool LocalDateTimeConverter(string name, LocalDateTime value, QueryValueConvertionType type, out string strValue)
+        public static bool LocalDateTimeConverter(string name, LocalDateTime value, bool forRange, out string strValue)
         {
             strValue = value.ToString(NodaUtil.LocalDateTime.FullIsoPattern.PatternText, null);
 
             return true;
         }
 
-        public static bool LocalDateConverter(string name, LocalDate value, QueryValueConvertionType type, out string strValue)
+        public static bool LocalDateConverter(string name, LocalDate value, bool forRange, out string strValue)
         {
             strValue = value.ToString(LocalDatePattern.Iso.PatternText, null);
 
@@ -31,55 +31,41 @@ namespace Raven.Client.NodaTime
         }
 
 
-        public static bool LocalTimeConverter(string name, LocalTime value, QueryValueConvertionType type, out string strValue)
+        public static bool LocalTimeConverter(string name, LocalTime value, bool forRange, out object objValue)
         {
-            if (type == QueryValueConvertionType.Range)
-            {
-                strValue = NumberUtil.NumberToString(value.TickOfDay);
+            var timeSpan = value.ToTimeSpan();
 
+            return TimeSpanConverter(timeSpan, forRange, out objValue);
+        }
+
+        public static bool OffsetConverter(string name, Offset value, bool forRange, out object objValue)
+        {
+            var timeSpan = value.ToTimeSpan();
+
+            return TimeSpanConverter(timeSpan, forRange, out objValue);
+        }
+
+        public static bool DurationConverter(string name, Duration value, bool forRange, out object objValue)
+        {
+            var timeSpan = value.ToTimeSpan();
+
+            return TimeSpanConverter(timeSpan, forRange, out objValue);
+        }
+
+        private static bool TimeSpanConverter(TimeSpan timeSpan, bool forRange, out object objValue)
+        {
+            if (forRange)
+            {
+                objValue = timeSpan.Ticks;
                 return true;
             }
 
-            var timeSpan = value.ToTimeSpan();
-
-            strValue = "\"" + timeSpan.ToString("c") + "\"";
+            objValue = timeSpan.ToString("c");
 
             return true;
         }
 
-        public static bool OffsetConverter(string name, Offset value, QueryValueConvertionType type, out string strValue)
-        {
-            if (type == QueryValueConvertionType.Range)
-            {
-                strValue = NumberUtil.NumberToString(value.Ticks);
-
-                return true;
-            }
-
-            var timeSpan = value.ToTimeSpan();
-
-            strValue = "\"" + timeSpan.ToString("c") + "\"";
-
-            return true;
-        }
-
-        public static bool DurationConverter(string name, Duration value, QueryValueConvertionType type, out string strValue)
-        {
-            if (type == QueryValueConvertionType.Range)
-            {
-                strValue = NumberUtil.NumberToString(value.BclCompatibleTicks);
-
-                return true;
-            }
-
-            var timeSpan = value.ToTimeSpan();
-
-            strValue = "\"" + timeSpan.ToString("c") + "\"";
-
-            return true;
-        }
-
-        public static bool OffsetDateTimeConverter(string name, OffsetDateTime value, QueryValueConvertionType type, out string strValue)
+        public static bool OffsetDateTimeConverter(string name, OffsetDateTime value, bool forRange, out string strValue)
         {
             var instant = value.ToInstant();
             NodaUtil.Instant.Validate(instant);
@@ -89,7 +75,7 @@ namespace Raven.Client.NodaTime
             return true;
         }
 
-        public static bool ZonedDateTimeConverter(string fieldname, ZonedDateTime value, QueryValueConvertionType type, out string strValue)
+        public static bool ZonedDateTimeConverter(string fieldname, ZonedDateTime value, bool forRange, out string strValue)
         {
             var instant = value.ToInstant();
             NodaUtil.Instant.Validate(instant);
@@ -99,11 +85,38 @@ namespace Raven.Client.NodaTime
             return true;
         }
 
-        public static bool PeriodConverter(string name, Period value, QueryValueConvertionType type, out string strValue)
+        public static bool PeriodConverter(string name, Period value, bool forRange, out string strValue)
         {
             strValue = value.ToString();
 
             return true;
+        }
+    }
+
+    /// <summary>
+    /// Helper function for numeric to indexed string and vice versa
+    /// </summary>
+    internal static class NumberUtil
+    {
+        /// <summary>
+        /// Translate a number to an indexable string
+        /// </summary>
+        public static string NumberToString(long number)
+        {
+            return number.ToString("G", CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// Translate a number to an indexable string
+        /// </summary>
+        public static string NumberToString(double number)
+        {
+            return number.ToString("G", CultureInfo.InvariantCulture);
+        }
+
+        public static string NumberToString(float number)
+        {
+            return number.ToString("G", CultureInfo.InvariantCulture);
         }
     }
 }
