@@ -3,14 +3,14 @@
     <PackageId>RavenDB.Client.NodaTime</PackageId>
     <Title>Noda Time support for RavenDB</Title>
     <Description>Provides NodaTime support for the RavenDB Client.</Description>
-    <Authors>Matt Johnson</Authors>
+    <Authors>Matt Johnson;Ryan Heath</Authors>
     <PackageTags>ravendb;raven db;noda time;nodatime</PackageTags>
     <PackageProjectUrl>https://github.com/mj1856/RavenDB-NodaTime</PackageProjectUrl>
     <PackageLicenseUrl>https://raw.github.com/mj1856/RavenDB-NodaTime/master/LICENSE.txt</PackageLicenseUrl>
     <PackageIconUrl>http://static.ravendb.net/logo-for-nuget.png</PackageIconUrl>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
-    <Version>3.6.0</Version>
+    <Version>4.0.0</Version>
     <TargetFrameworks>netstandard1.3</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3'">
