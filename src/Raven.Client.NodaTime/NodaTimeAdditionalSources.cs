@@ -2,13 +2,13 @@
 {
     public static class NodaTimeCompilationExtension
     {
-        public static readonly string AdditionalSources = @"
+        public static readonly string AdditionalSourcesRavenBundlesNodaTime = @"
 namespace Raven.Bundles.NodaTime
 {
 }
 ";
 
-        public static readonly string AdditionalSources2 = @"
+        public static readonly string AdditionalSourcesNodaTime = @"
 namespace NodaTime 
 {
 }

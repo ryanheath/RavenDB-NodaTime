@@ -269,8 +269,8 @@ namespace Raven.Client.NodaTime.Tests
                 StoreAllFields(FieldStorage.Yes);
 
                 AdditionalSources = new Dictionary<string, string> {
-                    { "Raven.Client.NodaTime", NodaTimeCompilationExtension.AdditionalSources },
-                    { "Raven.Client.NodaTime2", NodaTimeCompilationExtension.AdditionalSources2 }
+                    { "Raven.Client.NodaTime", NodaTimeCompilationExtension.AdditionalSourcesRavenBundlesNodaTime },
+                    { "Raven.Client.NodaTime2", NodaTimeCompilationExtension.AdditionalSourcesNodaTime }
                 };
             }
         }
