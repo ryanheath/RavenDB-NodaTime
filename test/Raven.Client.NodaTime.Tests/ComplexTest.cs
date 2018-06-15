@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using NodaTime;
 using Raven.Client.Documents;
@@ -61,6 +62,8 @@ namespace Raven.Client.NodaTime.Tests
                     var results = q.ToList();
 
                     documentStore.DebugWriteJson(results);
+
+                    Assert.Equal(2 * 364, results.Count);
                 }
             }
         }
@@ -92,6 +95,8 @@ namespace Raven.Client.NodaTime.Tests
                     var results = q.ToList();
 
                     documentStore.DebugWriteJson(results);
+
+                    Assert.Single(results);
                 }
             }
         }
@@ -246,7 +251,7 @@ namespace Raven.Client.NodaTime.Tests
                     let fromDate = schedule.FromDate.AsLocalDate()
                     let toDate = schedule.ToDate.AsLocalDate()
                     let daysInPeriod = fromDate.DaysBetween(toDate)
-                    from day in Enumerable.Range(0, daysInPeriod)
+                    from day in Enumerable.Range(0, daysInPeriod).Cast<int>()
                     let date = fromDate.PlusDays(day)
                     let hours = schedule.BusinessHours.FirstOrDefault(x => x.DayOfWeek.ToString() == date.DayOfWeek.ToString())
                     let localOpen = date + hours.Open.AsLocalTime()
