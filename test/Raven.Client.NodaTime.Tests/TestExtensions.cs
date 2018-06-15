@@ -14,10 +14,6 @@ namespace Raven.Client.NodaTime.Tests
         {
             if (_serializer == null)
             {
-                documentStore.Conventions.CustomizeJsonSerializer += jsonSerializer =>
-                {
-                    jsonSerializer.Formatting = Formatting.Indented;
-                };
 
                 _serializer = documentStore.Conventions.CreateSerializer();
             }
