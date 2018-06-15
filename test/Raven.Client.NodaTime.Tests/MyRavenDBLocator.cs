@@ -53,7 +53,7 @@ namespace Raven.Client.NodaTime.Tests
             {
                 _serverPath = path;
                 _command = _serverPath;
-                _arguments = string.Empty;
+                _arguments = "--License.Eula.Accepted=true";
                 return true;
             }
             return false;
