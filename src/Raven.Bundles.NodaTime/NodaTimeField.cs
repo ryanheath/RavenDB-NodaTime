@@ -97,15 +97,6 @@ namespace Raven.Bundles.NodaTime
             return value.ToDateTimeOffset();
         }
 
-        //public static RavenJObject Resolve(ZonedDateTime value)
-        //{
-        //    return new RavenJObject
-        //           {
-        //               { "OffsetDateTime", value.ToDateTimeOffset() },
-        //               { "Zone", value.Zone.Id }
-        //           };
-        //}
-
         public static int DaysBetween(LocalDate localDate1, LocalDate localDate2)
         {
             return (int) Period.Between(localDate1, localDate2, PeriodUnits.Days).Days;
