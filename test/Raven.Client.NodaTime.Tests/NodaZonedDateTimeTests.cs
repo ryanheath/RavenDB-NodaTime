@@ -128,7 +128,7 @@ namespace Raven.Client.NodaTime.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "RavenDB can not translate Comparer.Local.Compare")]
         public void Can_Use_NodaTime_ZonedDateTime_In_Static_Index_Now()
         {
             var instant = SystemClock.Instance.GetCurrentInstant();
@@ -136,7 +136,7 @@ namespace Raven.Client.NodaTime.Tests
             Can_Use_NodaTime_ZonedDateTime_In_Static_Index(new ZonedDateTime(instant, zone));
         }
 
-        [Fact]
+        [Fact(Skip="RavenDB can not translate Comparer.Local.Compare")]
         public void Can_Use_NodaTime_ZonedDateTime_In_Static_Index_NearIsoMax()
         {
             var instant = NodaUtil.Instant.MaxIsoValue - Duration.FromHours(24);
