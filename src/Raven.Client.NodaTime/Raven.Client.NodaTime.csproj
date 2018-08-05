@@ -24,6 +24,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NodaTime" Version="2.3.0" />
-    <PackageReference Include="RavenDB.Client" Version="4.0.5" />
+    <PackageReference Include="RavenDB.Client" Version="4.0.6" />
   </ItemGroup>
 </Project>
