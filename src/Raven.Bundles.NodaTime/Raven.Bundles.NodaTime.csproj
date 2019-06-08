@@ -14,7 +14,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NodaTime" Version="2.3.0" />
+    <PackageReference Include="NodaTime" Version="2.4.5" />
     <PackageReference Include="RavenDB.Client" Version="4.2.0" />
   </ItemGroup>
 </Project>
