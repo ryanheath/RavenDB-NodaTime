@@ -91,6 +91,13 @@ namespace Raven.Client.NodaTime
 
             return true;
         }
+
+        public static bool DateTimeZoneConverter(string fieldname, DateTimeZone value, bool forRange, out string strValue)
+        {
+            strValue = value.ToString();
+
+            return true;
+        }
     }
 
     /// <summary>

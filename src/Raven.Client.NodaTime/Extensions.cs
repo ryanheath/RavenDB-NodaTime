@@ -60,6 +60,7 @@ namespace Raven.Client.NodaTime
             documentStore.Conventions.RegisterQueryValueConverter<OffsetDateTime>(CustomQueryValueConverters.OffsetDateTimeConverter);
             documentStore.Conventions.RegisterQueryValueConverter<Period>(CustomQueryValueConverters.PeriodConverter);
             documentStore.Conventions.RegisterQueryValueConverter<ZonedDateTime>(CustomQueryValueConverters.ZonedDateTimeConverter);
+            documentStore.Conventions.RegisterQueryValueConverter<DateTimeZone>(CustomQueryValueConverters.DateTimeZoneConverter);
 
             // Register query translators
             documentStore.Conventions.RegisterCustomQueryTranslator<OffsetDateTime>(x => x.ToInstant(), CustomQueryTranslators.OffsetDateTimeToInstantTranslator);
