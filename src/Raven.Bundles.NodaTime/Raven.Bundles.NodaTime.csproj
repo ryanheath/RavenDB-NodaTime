@@ -5,8 +5,8 @@
     <Description>Provides NodaTime support for the RavenDB Server.</Description>
     <Authors>Matt Johnson;Ryan Heath</Authors>
     <PackageTags>ravendb;raven db;noda time;nodatime</PackageTags>
-    <PackageProjectUrl>https://github.com/mj1856/RavenDB-NodaTime</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.github.com/mj1856/RavenDB-NodaTime/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/ryanheath/RavenDB-NodaTime</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageIconUrl>http://static.ravendb.net/logo-for-nuget.png</PackageIconUrl>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
@@ -14,6 +14,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="$(PackageLicenseFile)"/>
     <PackageReference Include="NodaTime" Version="2.4.5" />
     <PackageReference Include="RavenDB.Client" Version="4.2.0" />
   </ItemGroup>

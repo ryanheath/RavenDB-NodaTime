@@ -6,7 +6,7 @@
     <Authors>Matt Johnson;Ryan Heath</Authors>
     <PackageTags>ravendb;raven db;noda time;nodatime</PackageTags>
     <PackageProjectUrl>https://github.com/mj1856/RavenDB-NodaTime</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.github.com/mj1856/RavenDB-NodaTime/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageIconUrl>http://static.ravendb.net/logo-for-nuget.png</PackageIconUrl>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
@@ -22,6 +22,7 @@
     <PackageReference Include="System.Runtime.Extensions" Version="4.3.1" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="$(PackageLicenseFile)"/>
     <PackageReference Include="NodaTime" Version="2.4.5" />
     <PackageReference Include="RavenDB.Client" Version="4.2.0" />
   </ItemGroup>
