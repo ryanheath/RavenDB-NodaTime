@@ -2,6 +2,7 @@
 using System.Linq;
 using NodaTime;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Conventions;
 using Raven.Client.Documents.Indexes;
 using Raven.Client.NodaTime.JsonConverters;
 using Raven.Imports.NodaTime.Serialization.JsonNet;
@@ -19,8 +20,14 @@ namespace Raven.Client.NodaTime
         public static T ConfigureForNodaTime<T>(this T documentStore, IDateTimeZoneProvider zoneProvider)
             where T : IDocumentStore
         {
-            var existing = documentStore.Conventions.CustomizeJsonSerializer;
-            documentStore.Conventions.CustomizeJsonSerializer = serializer =>
+            documentStore.Conventions.ConfigureForNodaTime(zoneProvider);
+            return documentStore;
+        }        
+        
+        public static DocumentConventions ConfigureForNodaTime(this DocumentConventions conventions, IDateTimeZoneProvider zoneProvider)
+        {
+            var existing = conventions.CustomizeJsonSerializer;
+            conventions.CustomizeJsonSerializer = serializer =>
             {
                 // Chain any existing serialization conventions
                 if (existing != null)
@@ -51,23 +58,23 @@ namespace Raven.Client.NodaTime
             };
 
             // Register query value converters
-            documentStore.Conventions.RegisterQueryValueConverter<Instant>(CustomQueryValueConverters.InstantConverter);
-            documentStore.Conventions.RegisterQueryValueConverter<LocalDateTime>(CustomQueryValueConverters.LocalDateTimeConverter);
-            documentStore.Conventions.RegisterQueryValueConverter<LocalDate>(CustomQueryValueConverters.LocalDateConverter);
-            documentStore.Conventions.RegisterQueryValueConverter<LocalTime>(CustomQueryValueConverters.LocalTimeConverter, RangeType.Long);
-            documentStore.Conventions.RegisterQueryValueConverter<Offset>(CustomQueryValueConverters.OffsetConverter, RangeType.Long);
-            documentStore.Conventions.RegisterQueryValueConverter<Duration>(CustomQueryValueConverters.DurationConverter, RangeType.Long);
-            documentStore.Conventions.RegisterQueryValueConverter<OffsetDateTime>(CustomQueryValueConverters.OffsetDateTimeConverter);
-            documentStore.Conventions.RegisterQueryValueConverter<Period>(CustomQueryValueConverters.PeriodConverter);
-            documentStore.Conventions.RegisterQueryValueConverter<ZonedDateTime>(CustomQueryValueConverters.ZonedDateTimeConverter);
-            documentStore.Conventions.RegisterQueryValueConverter<DateTimeZone>(CustomQueryValueConverters.DateTimeZoneConverter);
+            conventions.RegisterQueryValueConverter<Instant>(CustomQueryValueConverters.InstantConverter);
+            conventions.RegisterQueryValueConverter<LocalDateTime>(CustomQueryValueConverters.LocalDateTimeConverter);
+            conventions.RegisterQueryValueConverter<LocalDate>(CustomQueryValueConverters.LocalDateConverter);
+            conventions.RegisterQueryValueConverter<LocalTime>(CustomQueryValueConverters.LocalTimeConverter, RangeType.Long);
+            conventions.RegisterQueryValueConverter<Offset>(CustomQueryValueConverters.OffsetConverter, RangeType.Long);
+            conventions.RegisterQueryValueConverter<Duration>(CustomQueryValueConverters.DurationConverter, RangeType.Long);
+            conventions.RegisterQueryValueConverter<OffsetDateTime>(CustomQueryValueConverters.OffsetDateTimeConverter);
+            conventions.RegisterQueryValueConverter<Period>(CustomQueryValueConverters.PeriodConverter);
+            conventions.RegisterQueryValueConverter<ZonedDateTime>(CustomQueryValueConverters.ZonedDateTimeConverter);
+            conventions.RegisterQueryValueConverter<DateTimeZone>(CustomQueryValueConverters.DateTimeZoneConverter);
 
             // Register query translators
-            documentStore.Conventions.RegisterCustomQueryTranslator<OffsetDateTime>(x => x.ToInstant(), CustomQueryTranslators.OffsetDateTimeToInstantTranslator);
-            documentStore.Conventions.RegisterCustomQueryTranslator<OffsetDateTime>(x => x.LocalDateTime, CustomQueryTranslators.OffsetDateTimeLocalDateTimeTranslator);
-            documentStore.Conventions.RegisterCustomQueryTranslator<ZonedDateTime>(x => x.ToInstant(), CustomQueryTranslators.ZonedDateTimeTimeToInstantTranslator);
+            conventions.RegisterCustomQueryTranslator<OffsetDateTime>(x => x.ToInstant(), CustomQueryTranslators.OffsetDateTimeToInstantTranslator);
+            conventions.RegisterCustomQueryTranslator<OffsetDateTime>(x => x.LocalDateTime, CustomQueryTranslators.OffsetDateTimeLocalDateTimeTranslator);
+            conventions.RegisterCustomQueryTranslator<ZonedDateTime>(x => x.ToInstant(), CustomQueryTranslators.ZonedDateTimeTimeToInstantTranslator);
 
-            return documentStore;
+            return conventions;
         }
 
         public static TimeSpan ToTimeSpan(this LocalTime localTime)
