@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <ApplicationIcon />
     <StartupObject />
   </PropertyGroup>
@@ -8,11 +8,11 @@
     <ProjectReference Include="..\..\src\Raven.Client.NodaTime\Raven.Client.NodaTime.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.1" />
-    <PackageReference Include="NodaTime" Version="2.4.5" />
-    <PackageReference Include="RavenDB.Client" Version="4.2.0" />
-    <PackageReference Include="RavenDB.TestDriver" Version="4.2.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="NodaTime" Version="3.0.0" />
+    <PackageReference Include="RavenDB.Client" Version="5.0.0" />
+    <PackageReference Include="RavenDB.TestDriver" Version="5.0.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
