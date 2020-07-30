@@ -4,6 +4,7 @@ using NodaTime;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Conventions;
 using Raven.Client.Documents.Indexes;
+using Raven.Client.Json.Serialization.NewtonsoftJson;
 using Raven.Client.NodaTime.JsonConverters;
 using Raven.Imports.NodaTime.Serialization.JsonNet;
 
@@ -26,8 +27,11 @@ namespace Raven.Client.NodaTime
         
         public static DocumentConventions ConfigureForNodaTime(this DocumentConventions conventions, IDateTimeZoneProvider zoneProvider)
         {
-            var existing = conventions.CustomizeJsonSerializer;
-            conventions.CustomizeJsonSerializer = serializer =>
+            if (!(conventions.Serialization is NewtonsoftJsonSerializationConventions jsonSerializationConventions))
+                throw new InvalidOperationException("ConfigureForNodaTime() can only be used in conjunction with the Newtonsoft.Json serializer.");
+
+            var existing = jsonSerializationConventions.CustomizeJsonSerializer;
+            jsonSerializationConventions.CustomizeJsonSerializer = serializer =>
             {
                 // Chain any existing serialization conventions
                 if (existing != null)
