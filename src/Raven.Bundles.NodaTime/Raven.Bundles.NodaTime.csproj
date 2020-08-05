@@ -8,6 +8,7 @@
     <PackageProjectUrl>https://github.com/ryanheath/RavenDB-NodaTime</PackageProjectUrl>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageIconUrl>http://static.ravendb.net/logo-for-nuget.png</PackageIconUrl>
+    <PackageIcon>logo-for-nuget.png</PackageIcon>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
     <Version>5.0.0</Version>
@@ -15,6 +16,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
+    <None Include="..\..\logo-for-nuget.png" Pack="true" PackagePath="\"/>
     <PackageReference Include="NodaTime" Version="2.4.5" />
     <PackageReference Include="RavenDB.Client" Version="5.0.0" />
   </ItemGroup>
