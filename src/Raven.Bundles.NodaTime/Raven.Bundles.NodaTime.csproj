@@ -11,7 +11,7 @@
     <PackageIcon>logo-for-nuget.png</PackageIcon>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
-    <Version>5.0.0</Version>
+    <Version>5.0.1</Version>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
