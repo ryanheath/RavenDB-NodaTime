@@ -59,6 +59,7 @@ namespace Raven.Client.NodaTime
                 serializer.Converters.Add(new DurationConverter());
                 serializer.Converters.Add(new OffsetDateTimeConverter());
                 serializer.Converters.Add(new ZonedDateTimeConverter());
+                serializer.Converters.Add(new DateIntervalConverter());
             };
 
             // Register query value converters
