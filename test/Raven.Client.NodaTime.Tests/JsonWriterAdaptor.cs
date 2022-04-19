@@ -86,5 +86,9 @@ namespace Raven.Client.NodaTime.Tests
 		public void WriteValue(ushort value) => _writer.WriteValue(value);
 		public void WriteValue(ushort? value) => _writer.WriteValue(value);
 		public void WriteWhitespace(string ws) => _writer.WriteWhitespace(ws);
+		public void WriteValue(TimeOnly value) => _writer.WriteValue(value);
+		public void WriteValue(TimeOnly? value) => _writer.WriteValue(value);
+		public void WriteValue(DateOnly value) => _writer.WriteValue(value);
+		public void WriteValue(DateOnly? value) => _writer.WriteValue(value);
 	}
 }

@@ -1,17 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <ApplicationIcon />
-    <StartupObject />
+    <TargetFramework>net6.0</TargetFramework>
+	<Nullable>disable</Nullable>
+	<IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Raven.Client.NodaTime\Raven.Client.NodaTime.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
     <PackageReference Include="NodaTime" Version="2.4.5" />
-    <PackageReference Include="RavenDB.Client" Version="5.0.0" />
-    <PackageReference Include="RavenDB.TestDriver" Version="5.0.0" />
+	<PackageReference Include="RavenDB.Client" Version="5.3.102" />
+	<PackageReference Include="RavenDB.TestDriver" Version="5.3.101" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
