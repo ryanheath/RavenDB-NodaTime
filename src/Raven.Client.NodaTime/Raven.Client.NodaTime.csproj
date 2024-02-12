@@ -6,26 +6,20 @@
     <Authors>Matt Johnson;Ryan Heath</Authors>
     <PackageTags>ravendb;raven db;noda time;nodatime</PackageTags>
     <PackageProjectUrl>https://github.com/mj1856/RavenDB-NodaTime</PackageProjectUrl>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIconUrl>http://static.ravendb.net/logo-for-nuget.png</PackageIconUrl>
     <PackageIcon>logo-for-nuget.png</PackageIcon>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
-    <Version>5.3.102</Version>
+    <Version>5.4.1</Version>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="System.Collections" Version="4.3.0" />
-    <PackageReference Include="System.Linq" Version="4.3.0" />
-    <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
-    <PackageReference Include="System.Reflection" Version="4.3.0" />
-    <PackageReference Include="System.Runtime" Version="4.3.1" />
-    <PackageReference Include="System.Runtime.Extensions" Version="4.3.1" />
+    <PackageReference Include="NodaTime" Version="3.1.11" />
+    <PackageReference Include="RavenDB.Client" Version="5.4.1" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
     <None Include="..\..\logo-for-nuget.png" Pack="true" PackagePath="\" />
-    <PackageReference Include="NodaTime" Version="2.4.5" />
-    <PackageReference Include="RavenDB.Client" Version="5.3.102" />
   </ItemGroup>
 </Project>
