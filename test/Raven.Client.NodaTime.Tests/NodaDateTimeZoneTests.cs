@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using NodaTime;
 using Raven.Client.Documents.Commands;
+using Raven.Client.Documents.Conventions;
 using Raven.Client.Documents.Indexes;
 using Sparrow.Json;
 using Xunit;
@@ -31,7 +32,7 @@ namespace Raven.Client.NodaTime.Tests
 
                 using (var session = documentStore.OpenSession())
                 {
-                    var command = new GetDocumentsCommand("foos/1", null, false);
+                    var command = new GetDocumentsCommand(new DocumentConventions(),"foos/1", null, false);
                     session.Advanced.RequestExecutor.Execute(command, session.Advanced.Context);
                     var json = (BlittableJsonReaderObject) command.Result.Results[0];
                     System.Diagnostics.Debug.WriteLine(json.ToString());
