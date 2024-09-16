@@ -11,12 +11,12 @@
     <PackageIcon>logo-for-nuget.png</PackageIcon>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
-    <Version>6.0.104</Version>
+    <Version>6.0.105</Version>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NodaTime" Version="3.1.11" />
-    <PackageReference Include="RavenDB.Client" Version="6.0.104" />
+    <PackageReference Include="NodaTime" Version="3.1.12" />
+    <PackageReference Include="RavenDB.Client" Version="6.0.105" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
