@@ -3,7 +3,7 @@
     <TargetFramework>net8.0</TargetFramework>
 	<Nullable>disable</Nullable>
 	<IsPackable>false</IsPackable>
-	<LangVersion>12</LangVersion>
+	<LangVersion>default</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Raven.Client.NodaTime\Raven.Client.NodaTime.csproj" />
