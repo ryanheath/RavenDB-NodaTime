@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageVersion Include="NodaTime" Version="3.2.2" />
-    <PackageVersion Include="RavenDB.Client" Version="6.2.10" />
-    <PackageVersion Include="RavenDB.TestDriver" Version="6.2.10" />
+    <PackageVersion Include="RavenDB.Client" Version="7.1.3" />
+    <PackageVersion Include="RavenDB.TestDriver" Version="7.1.3" />
   </ItemGroup>
 
   <ItemGroup>
