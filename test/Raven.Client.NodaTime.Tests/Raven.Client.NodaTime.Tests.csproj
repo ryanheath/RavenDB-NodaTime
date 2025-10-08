@@ -1,20 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-	<Nullable>disable</Nullable>
-	<IsPackable>false</IsPackable>
-	<LangVersion>default</LangVersion>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\Raven.Client.NodaTime\Raven.Client.NodaTime.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
-	<PackageReference Include="RavenDB.TestDriver" Version="6.2.10" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="RavenDB.TestDriver" />
+    <PackageReference Include="xunit.runner.visualstudio">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit" />
   </ItemGroup>
+
 </Project>

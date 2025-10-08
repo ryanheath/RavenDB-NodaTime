@@ -1,25 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <PackageId>RavenDB.Bundles.NodaTime</PackageId>
     <Title>Noda Time support for RavenDB (server-side)</Title>
     <Description>Provides NodaTime support for the RavenDB Server.</Description>
-    <Authors>Matt Johnson;Ryan Heath</Authors>
-    <PackageTags>ravendb;raven db;noda time;nodatime</PackageTags>
-    <PackageProjectUrl>https://github.com/ryanheath/RavenDB-NodaTime</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageIconUrl>http://static.ravendb.net/logo-for-nuget.png</PackageIconUrl>
-    <PackageIcon>logo-for-nuget.png</PackageIcon>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <IncludeSource>True</IncludeSource>
-    <IncludeSymbols>True</IncludeSymbols>
-    <Version>6.2.10</Version>
-    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+
   <ItemGroup>
-    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
-    <None Include="..\..\logo-for-nuget.png" Pack="true" PackagePath="\" />
-    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
-    <PackageReference Include="NodaTime" Version="3.2.2" />
-    <PackageReference Include="RavenDB.Client" Version="6.2.10" />
+    <PackageReference Include="NodaTime" />
+    <PackageReference Include="RavenDB.Client" />
   </ItemGroup>
+
 </Project>

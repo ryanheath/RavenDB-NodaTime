@@ -1,0 +1,23 @@
+<Project>
+
+  <PropertyGroup>
+    <Authors>Matt Johnson;Ryan Heath</Authors>
+    <PackageTags>ravendb;raven db;noda time;nodatime</PackageTags>
+    <PackageProjectUrl>https://github.com/ryanheath/RavenDB-NodaTime</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIconUrl>http://static.ravendb.net/logo-for-nuget.png</PackageIconUrl>
+    <PackageIcon>logo-for-nuget.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IncludeSource>True</IncludeSource>
+    <IncludeSymbols>True</IncludeSymbols>
+    <Version>6.2.10</Version>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
+    <None Include="..\..\logo-for-nuget.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
