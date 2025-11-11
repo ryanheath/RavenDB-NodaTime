@@ -2,74 +2,76 @@
 // Use of this source code is governed by the Apache License 2.0,
 // as found in the LICENSE.txt file.
 
-using System.IO;
 using Newtonsoft.Json;
 using NodaTime;
 
-namespace Raven.Imports.NodaTime.Serialization.JsonNet
+namespace Raven.Imports.NodaTime.Serialization.JsonNet;
+
+/// <summary>
+/// Json.NET converter for <see cref="Interval"/>.
+/// </summary>   
+internal sealed class NodaIntervalConverter : NodaConverterBase<Interval>
 {
     /// <summary>
-    /// Json.NET converter for <see cref="Interval"/>.
-    /// </summary>   
-    internal sealed class NodaIntervalConverter : NodaConverterBase<Interval>
+    /// Reads Start and End properties for the start and end of an interval, converting them to instants
+    /// using the given serializer.
+    /// </summary>
+    /// <param name="reader">The JSON reader to fetch data from.</param>
+    /// <param name="serializer">The serializer for embedded serialization.</param>
+    /// <returns>The <see cref="DateTimeZone"/> identified in the JSON, or null.</returns>
+    protected override Interval ReadJsonImpl(JsonReader reader, JsonSerializer serializer)
     {
-        /// <summary>
-        /// Reads Start and End properties for the start and end of an interval, converting them to instants
-        /// using the given serializer.
-        /// </summary>
-        /// <param name="reader">The JSON reader to fetch data from.</param>
-        /// <param name="serializer">The serializer for embedded serialization.</param>
-        /// <returns>The <see cref="DateTimeZone"/> identified in the JSON, or null.</returns>
-        protected override Interval ReadJsonImpl(JsonReader reader, JsonSerializer serializer)
+        var startInstant = default(Instant);
+        var endInstant = default(Instant);
+        var gotStartInstant = false;
+        var gotEndInstant = false;
+        while (reader.Read())
         {
-            var startInstant = default(Instant);
-            var endInstant = default(Instant);
-            var gotStartInstant = false;
-            var gotEndInstant = false;
-            while (reader.Read())
+            if (reader.TokenType != JsonToken.PropertyName)
             {
-                if (reader.TokenType != JsonToken.PropertyName)
-                    break;
-
-                var propertyName = (string)reader.Value;
-                if (!reader.Read())
-                    continue;
-
-                if (propertyName == "Start")
-                {
-                    startInstant = serializer.Deserialize<Instant>(reader);
-                    gotStartInstant = true;
-                }
-
-                if (propertyName == "End")
-                {
-                    endInstant = serializer.Deserialize<Instant>(reader);
-                    gotEndInstant = true;
-                }
+                break;
             }
 
-            if (!(gotStartInstant && gotEndInstant))
+            var propertyName = (string)reader.Value;
+            if (!reader.Read())
             {
-                throw new InvalidDataException("An Interval must contain Start and End properties.");
+                continue;
             }
 
-            return new Interval(startInstant, endInstant);
+            if (propertyName == "Start")
+            {
+                startInstant = serializer.Deserialize<Instant>(reader);
+                gotStartInstant = true;
+            }
+
+            if (propertyName == "End")
+            {
+                endInstant = serializer.Deserialize<Instant>(reader);
+                gotEndInstant = true;
+            }
         }
 
-        /// <summary>
-        /// Serializes the interval as start/end instants.
-        /// </summary>
-        /// <param name="writer">The writer to write JSON to</param>
-        /// <param name="value">The interval to serialize</param>
-        /// <param name="serializer">The serializer for embedded serialization.</param>
-        protected override void WriteJsonImpl(JsonWriter writer, Interval value, JsonSerializer serializer)
+        if (!(gotStartInstant && gotEndInstant))
         {
-            writer.WriteStartObject();
-            writer.WritePropertyName("Start");
-            serializer.Serialize(writer, value.Start);
-            writer.WritePropertyName("End");
-            serializer.Serialize(writer, value.End);
-            writer.WriteEndObject();
+            throw new InvalidDataException("An Interval must contain Start and End properties.");
         }
+
+        return new Interval(startInstant, endInstant);
+    }
+
+    /// <summary>
+    /// Serializes the interval as start/end instants.
+    /// </summary>
+    /// <param name="writer">The writer to write JSON to</param>
+    /// <param name="value">The interval to serialize</param>
+    /// <param name="serializer">The serializer for embedded serialization.</param>
+    protected override void WriteJsonImpl(JsonWriter writer, Interval value, JsonSerializer serializer)
+    {
+        writer.WriteStartObject();
+        writer.WritePropertyName("Start");
+        serializer.Serialize(writer, value.Start);
+        writer.WritePropertyName("End");
+        serializer.Serialize(writer, value.End);
+        writer.WriteEndObject();
     }
 }
