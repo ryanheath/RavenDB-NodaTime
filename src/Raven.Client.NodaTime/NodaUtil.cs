@@ -23,7 +23,8 @@ public static class NodaUtil
 
         internal static void Validate(global::NodaTime.Instant instant)
         {
-            if (instant.ToUnixTimeTicks() >= MinIsoTicks && instant.ToUnixTimeTicks() <= MaxIsoTicks)
+            var ticks = instant.ToUnixTimeTicks();
+            if (ticks >= MinIsoTicks && ticks <= MaxIsoTicks)
             {
                 return;
             }
