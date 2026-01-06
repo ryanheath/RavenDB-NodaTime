@@ -3,9 +3,9 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="NodaTime" Version="3.2.2" />
-    <PackageVersion Include="RavenDB.Client" Version="6.2.11" />
-    <PackageVersion Include="RavenDB.TestDriver" Version="6.2.11" />
+    <PackageVersion Include="NodaTime" Version="3.3.0" />
+    <PackageVersion Include="RavenDB.Client" Version="6.2.12" />
+    <PackageVersion Include="RavenDB.TestDriver" Version="6.2.12" />
   </ItemGroup>
   <ItemGroup>
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
