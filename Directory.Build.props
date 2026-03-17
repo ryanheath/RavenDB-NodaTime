@@ -10,7 +10,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
-    <Version>7.2.0</Version>
+    <Version>7.2.1</Version>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
