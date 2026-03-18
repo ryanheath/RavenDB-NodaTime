@@ -1,54 +1,52 @@
-﻿using System;
+﻿using Raven.Client.Documents.Linq;
 using System.Linq.Expressions;
-using Raven.Client.Documents.Linq;
 
-namespace Raven.Client.NodaTime
+namespace Raven.Client.NodaTime;
+
+internal static class CustomQueryTranslators
 {
-    internal static class CustomQueryTranslators
+    public static LinqPathProvider.Result OffsetDateTimeToInstantTranslator(LinqPathProvider provider, Expression expression)
     {
-        public static LinqPathProvider.Result OffsetDateTimeToInstantTranslator(LinqPathProvider provider, Expression expression)
+        // Just send the parent path back since we are storing it as a DateTimeOffset
+
+        var exp = (MethodCallExpression)expression;
+        var parent = provider.GetPath(exp.Object);
+
+        return new LinqPathProvider.Result
         {
-            // Just send the parent path back since we are storing it as a DateTimeOffset
+            MemberType = exp.Method.ReturnType,
+            IsNestedPath = false,
+            Path = parent.Path
+        };
+    }
 
-            var exp = (MethodCallExpression)expression;
-            var parent = provider.GetPath(exp.Object);
+    public static LinqPathProvider.Result OffsetDateTimeLocalDateTimeTranslator(LinqPathProvider provider, Expression expression)
+    {
+        // Change the OffsetDateTime.LocalDateTime property to the DateTimeOffset.DateTime property
 
-            return new LinqPathProvider.Result
-                   {
-                       MemberType = exp.Method.ReturnType,
-                       IsNestedPath = false,
-                       Path = parent.Path
-                   };
-        }
+        var exp = (MemberExpression)expression;
+        var parent = provider.GetPath(exp.Expression);
 
-        public static LinqPathProvider.Result OffsetDateTimeLocalDateTimeTranslator(LinqPathProvider provider, Expression expression)
+        return new LinqPathProvider.Result
         {
-            // Change the OffsetDateTime.LocalDateTime property to the DateTimeOffset.DateTime property
+            MemberType = typeof(DateTime),
+            IsNestedPath = false,
+            Path = parent.Path + ".DateTime"
+        };
+    }
 
-            var exp = (MemberExpression)expression;
-            var parent = provider.GetPath(exp.Expression);
+    public static LinqPathProvider.Result ZonedDateTimeTimeToInstantTranslator(LinqPathProvider provider, Expression expression)
+    {
+        // Change the ZonedDateTime.ToInstant() method to use our .OffsetDateTime property instead.
 
-            return new LinqPathProvider.Result
-                   {
-                       MemberType = typeof(DateTime),
-                       IsNestedPath = false,
-                       Path = parent.Path + ".DateTime"
-                   };
-        }
+        var exp = (MethodCallExpression)expression;
+        var parent = provider.GetPath(exp.Object);
 
-        public static LinqPathProvider.Result ZonedDateTimeTimeToInstantTranslator(LinqPathProvider provider, Expression expression)
+        return new LinqPathProvider.Result
         {
-            // Change the ZonedDateTime.ToInstant() method to use our .OffsetDateTime property instead.
-
-            var exp = (MethodCallExpression)expression;
-            var parent = provider.GetPath(exp.Object);
-
-            return new LinqPathProvider.Result
-            {
-                MemberType = typeof(DateTimeOffset),
-                IsNestedPath = false,
-                Path = parent.Path + ".OffsetDateTime"
-            };
-        }
+            MemberType = typeof(DateTimeOffset),
+            IsNestedPath = false,
+            Path = parent.Path + ".OffsetDateTime"
+        };
     }
 }

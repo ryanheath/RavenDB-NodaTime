@@ -12,6 +12,8 @@
     <IncludeSymbols>True</IncludeSymbols>
     <Version>7.2.1</Version>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
