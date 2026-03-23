@@ -1,33 +1,26 @@
 ﻿using Raven.Client.Documents;
 using Raven.TestDriver;
 
-namespace Raven.Client.NodaTime.Tests
+namespace Raven.Client.NodaTime.Tests;
+
+public class MyRavenTestDriver : RavenTestDriver
 {
-    public class MyRavenTestDriver : RavenTestDriver
+    static MyRavenTestDriver()
     {
-        private static bool _hasBeenConfigured;
-        
-        protected MyRavenTestDriver()
+        ConfigureServer(new TestServerOptions
         {
-            if (_hasBeenConfigured) 
-                return;
-            
-            ConfigureServer(new TestServerOptions
+            Licensing =
             {
-                Licensing =
-                {
-                    ThrowOnInvalidOrMissingLicense = false
-                }
-            });
-            _hasBeenConfigured = true;
-        }
-
-        protected override void PreInitialize(IDocumentStore documentStore)
-        {
-            documentStore.ConfigureForNodaTime();
-            base.PreInitialize(documentStore);
-        }
-
-        protected IDocumentStore NewDocumentStore() => GetDocumentStore();
+                ThrowOnInvalidOrMissingLicense = false
+            }
+        });
     }
+
+    protected override void PreInitialize(IDocumentStore documentStore)
+    {
+        documentStore.ConfigureForNodaTime();
+        base.PreInitialize(documentStore);
+    }
+
+    protected IDocumentStore NewDocumentStore() => GetDocumentStore();
 }
